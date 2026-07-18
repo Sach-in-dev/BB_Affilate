@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,12 @@ import { api } from "@/lib/axios";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const justRegistered = Boolean((location.state as { justRegistered?: boolean } | null)?.justRegistered);
+  const prefillEmail = (location.state as { email?: string } | null)?.email ?? "";
+
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: prefillEmail, password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,10 +61,22 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent className="space-y-5 px-6 pb-6">
+          {justRegistered && (
+            <p className="rounded-lg bg-green-50 px-3 py-2 text-center text-sm font-medium text-green-700 dark:bg-green-950 dark:text-green-400">
+              Account created! Sign in to continue.
+            </p>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label className="text-foreground">Email *</Label>
-              <Input name="email" placeholder="Email" onChange={handleChange} className="h-11" />
+              <Input
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                className="h-11"
+              />
             </div>
 
             <div className="relative">

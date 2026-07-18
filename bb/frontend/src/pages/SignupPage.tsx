@@ -27,12 +27,8 @@ export default function SignupPage() {
     try {
       setLoading(true);
       setError(null);
-      const res = await api.post("/auth/signup", form);
-      if (res.data?.data?.token) {
-        localStorage.setItem("token", res.data.data.token);
-      }
-      navigate("/dashboard");
-      window.location.reload();
+      await api.post("/auth/signup", form);
+      navigate("/login", { state: { justRegistered: true, email: form.email } });
     } catch (err: any) {
       setError(err?.response?.data?.detail || "Registration failed");
     } finally {
