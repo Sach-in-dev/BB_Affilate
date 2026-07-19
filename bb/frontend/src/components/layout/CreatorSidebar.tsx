@@ -30,10 +30,10 @@ export function CreatorSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="py-4">
-        <div className="flex flex-col gap-1 px-3 group-data-[collapsible=icon]:hidden">
+        <Link to="/dashboard" className="flex flex-col gap-1 px-3 group-data-[collapsible=icon]:hidden">
           <span className="text-lg font-bold tracking-tight">Creator Studio</span>
           <img src={LOGO} alt="Beauty Barn" className="mt-1 h-8 w-auto object-contain" />
-        </div>
+        </Link>
       </SidebarHeader>
 
       <SidebarContent>

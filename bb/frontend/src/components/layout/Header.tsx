@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Bell, ChevronDown, User, LogOut } from "lucide-react";
 import {
   DropdownMenu,
@@ -11,6 +12,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -48,7 +50,7 @@ export default function Header() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/profile")}>
               <User size={16} />
               <span>My Profile</span>
             </DropdownMenuItem>
