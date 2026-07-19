@@ -1,0 +1,52 @@
+services:
+  # ── PostgreSQL ──
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bb_affiliate
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── FastAPI Backend ──
+  backend:
+    build:
+      context: ./bb/backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/bb_affiliate
+      SECRET_KEY: ${SECRET_KEY:-change-this-to-a-secure-random-string-in-production}
+      STOREFRONT_BASE_URL: ${STOREFRONT_BASE_URL:-https://beautybarn.in}
+      ASSET_CDN_BASE_URL: ${ASSET_CDN_BASE_URL:-https://bb-asset.blr1.cdn.digitaloceanspaces.com}
+      AFFILIATE_BASE_URL: ${AFFILIATE_BASE_URL:-http://localhost}
+      PRODUCT_SYNC_LIMIT: ${PRODUCT_SYNC_LIMIT:-20}
+      PROD_DB_URL: ${PROD_DB_URL:-}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ── React Frontend (Nginx) ──
+  frontend:
+    build:
+      context: ./bb/frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
