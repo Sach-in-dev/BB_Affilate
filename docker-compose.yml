@@ -1,52 +1,55 @@
 services:
-  # ── PostgreSQL ──
+  # ── PostgreSQL Database ──────────────────────────
   db:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
+    container_name: bb-affiliate-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: bb_affiliate
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-supersecretpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-bb_affiliate}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bb_affiliate"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-  # ── FastAPI Backend ──
-  backend:
+  # ── FastAPI Backend ──────────────────────────────
+  api:
     build:
-      context: ./bb/backend
+      context: ./backend
       dockerfile: Dockerfile
+    container_name: bb-affiliate-api
     restart: unless-stopped
-    ports:
-      - "8001:8001"
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/bb_affiliate
-      SECRET_KEY: ${SECRET_KEY:-change-this-to-a-secure-random-string-in-production}
-      STOREFRONT_BASE_URL: ${STOREFRONT_BASE_URL:-https://beautybarn.in}
-      ASSET_CDN_BASE_URL: ${ASSET_CDN_BASE_URL:-https://bb-asset.blr1.cdn.digitaloceanspaces.com}
-      AFFILIATE_BASE_URL: ${AFFILIATE_BASE_URL:-http://localhost}
-      PRODUCT_SYNC_LIMIT: ${PRODUCT_SYNC_LIMIT:-20}
-      PROD_DB_URL: ${PROD_DB_URL:-}
     depends_on:
       db:
         condition: service_healthy
-
-  # ── React Frontend (Nginx) ──
-  frontend:
-    build:
-      context: ./bb/frontend
-      dockerfile: Dockerfile
-    restart: unless-stopped
     ports:
-      - "80:80"
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-supersecretpassword}@db:5432/${POSTGRES_DB:-bb_affiliate}
+      - PROD_DB_URL=${PROD_DB_URL:-}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-change-in-production}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:5173}
+      - STOREFRONT_BASE_URL=${STOREFRONT_BASE_URL:-https://beautybarn.in}
+      - AFFILIATE_BASE_URL=${AFFILIATE_BASE_URL:-http://localhost:5173}
+      - PRODUCT_SYNC_LIMIT=${PRODUCT_SYNC_LIMIT:-20}
+
+  # ── React Frontend (nginx) ──────────────────────
+  ui:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bb-affiliate-ui
+    restart: unless-stopped
     depends_on:
-      - backend
+      - api
+    ports:
+      - "5173:80"
 
 volumes:
   pgdata:
