@@ -19,8 +19,14 @@ function LinkRow({ link, onDelete }: { link: AffiliateLink; onDelete: (id: strin
   const [copied, setCopied] = useState(false);
   const isBundle = link.link_type === "bundle";
 
+  let displayUrl = link.url;
+  try {
+    const urlObj = new URL(link.url);
+    displayUrl = `${window.location.origin}${urlObj.pathname}${urlObj.search}`;
+  } catch {}
+
   const copy = async () => {
-    await navigator.clipboard.writeText(link.url);
+    await navigator.clipboard.writeText(displayUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
@@ -47,7 +53,7 @@ function LinkRow({ link, onDelete }: { link: AffiliateLink; onDelete: (id: strin
           </div>
           <div className="mt-1.5 flex items-center gap-2">
             <code className="truncate rounded bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-              {link.url}
+              {displayUrl}
             </code>
             <button onClick={copy} className="shrink-0 text-muted-foreground hover:text-foreground" title="Copy">
               {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
@@ -83,7 +89,7 @@ function LinkRow({ link, onDelete }: { link: AffiliateLink; onDelete: (id: strin
           </div>
           <div className="flex items-center gap-1">
             <a
-              href={link.url}
+              href={displayUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-md p-2 text-muted-foreground hover:bg-muted hover:text-foreground"

@@ -102,7 +102,7 @@ export default function BundleLandingPage({
         <div className="flex items-center justify-center border-b border-border py-3">
           <span className="text-xl font-bold tracking-tight">
             <span className="text-primary">26</span>
-            <span className="text-white">ritual</span>
+            <span className="text-foreground">ritual</span>
           </span>
         </div>
 

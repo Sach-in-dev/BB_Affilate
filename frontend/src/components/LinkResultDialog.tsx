@@ -22,9 +22,17 @@ export function LinkResultDialog({
 }) {
   const [copied, setCopied] = useState(false);
 
+  let displayUrl = link?.url || "";
+  if (link?.url) {
+    try {
+      const urlObj = new URL(link.url);
+      displayUrl = `${window.location.origin}${urlObj.pathname}${urlObj.search}`;
+    } catch {}
+  }
+
   const copy = async () => {
-    if (!link) return;
-    await navigator.clipboard.writeText(link.url);
+    if (!displayUrl) return;
+    await navigator.clipboard.writeText(displayUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
@@ -52,7 +60,7 @@ export function LinkResultDialog({
         <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/40 p-2">
           <input
             readOnly
-            value={link.url}
+            value={displayUrl}
             className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none"
           />
           <Button size="sm" onClick={copy} className="bg-primary text-primary-foreground hover:bg-primary/90">
@@ -66,7 +74,7 @@ export function LinkResultDialog({
             {isBundle ? "Bundle" : "Single product"}
           </Badge>
           <a
-            href={link.url}
+            href={displayUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-sm text-primary hover:underline"
