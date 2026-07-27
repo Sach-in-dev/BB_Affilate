@@ -37,6 +37,8 @@ async def _load_link(db: AsyncSession, code: str) -> AffiliateLink:
     link = await db.scalar(select(AffiliateLink).where(AffiliateLink.code == code))
     if not link:
         raise HTTPException(status_code=404, detail="This link is invalid or has expired")
+    if not link.is_active:
+        raise HTTPException(status_code=403, detail="This link is currently unavailable")
     return link
 
 

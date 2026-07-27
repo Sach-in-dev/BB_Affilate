@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import engine, Base, async_session
 from app.core.seed import seed_defaults
-from app.routers import auth, admin, products, creator, public, banners
+from app.routers import auth, admin, products, creator, public, banners, user_management
 
 # Ensure models are imported so metadata is registered before create_all.
 from app.models import user as _user  # noqa: F401
@@ -14,6 +14,7 @@ from app.models import role as _role  # noqa: F401
 from app.models import product as _product  # noqa: F401
 from app.models import affiliate as _affiliate  # noqa: F401
 from app.models import banner as _banner  # noqa: F401
+from app.models import activity_log as _activity_log  # noqa: F401
 
 
 @asynccontextmanager
@@ -35,5 +36,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for r in (auth.router, admin.router, products.router, creator.router, public.router, banners.router):
+for r in (auth.router, admin.router, products.router, creator.router, public.router, banners.router, user_management.router):
     app.include_router(r, prefix="/api")

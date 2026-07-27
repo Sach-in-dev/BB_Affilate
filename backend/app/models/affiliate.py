@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, func
+from sqlalchemy import Column, String, Integer, DateTime, Boolean, ForeignKey, func
 from sqlalchemy.orm import relationship
 import uuid
 
@@ -20,6 +20,8 @@ class AffiliateLink(Base):
     creator_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     link_type = Column(String, nullable=False)  # single | bundle
     title = Column(String, nullable=True)       # optional label for bundles
+
+    is_active = Column(Boolean, default=True, nullable=False)
 
     total_clicks = Column(Integer, default=0, nullable=False)
     total_orders = Column(Integer, default=0, nullable=False)

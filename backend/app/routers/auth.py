@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import select
@@ -47,7 +49,7 @@ async def signup(body: SignUpRequest, db: AsyncSession = Depends(get_db)):
     if existing.scalar_one_or_none():
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    # Public signup creates a creator (influencer) account.
+    # Public signup creates a creator (influencer) account with pending approval.
     user = User(
         first_name=body.first_name,
         last_name=body.last_name,
@@ -57,6 +59,7 @@ async def signup(body: SignUpRequest, db: AsyncSession = Depends(get_db)):
         user_type="creator",
         role_name=None,
         permissions=[],
+        approval_status="pending",
     )
     db.add(user)
     await db.commit()
@@ -74,6 +77,9 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     if not user.is_active:
         raise HTTPException(status_code=403, detail="Account is deactivated")
+
+    user.last_login_at = datetime.now(timezone.utc)
+    await db.commit()
 
     token = create_access_token({"sub": user.id})
     return {"data": TokenResponse(token=token, user=UserResponse.model_validate(user)).model_dump()}

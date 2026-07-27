@@ -20,6 +20,7 @@ import AdminLayout from "@/components/layout/AdminLayout";
 import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
 import RolesPermissionsPage from "@/pages/admin/RolesPermissionsPage";
 import AdminRolesPage from "@/pages/admin/AdminRolesPage";
+import UserManagementPage from "@/pages/admin/UserManagementPage";
 import ComingSoonPage from "@/pages/admin/ComingSoonPage";
 
 createRoot(document.getElementById("root")!).render(
@@ -51,7 +52,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="commissions" element={<ComingSoonPage title="Commissions" />} />
             <Route path="campaigns" element={<ComingSoonPage title="Campaigns" />} />
             <Route path="products" element={<ComingSoonPage title="Products" />} />
-            <Route path="creators" element={<ComingSoonPage title="Creators" />} />
+            <Route path="creators" element={<UserManagementPage />} />
             <Route path="banners" element={<ComingSoonPage title="Banners" />} />
             <Route path="links" element={<ComingSoonPage title="Links" />} />
             <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
