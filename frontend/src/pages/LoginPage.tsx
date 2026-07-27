@@ -50,7 +50,7 @@ export default function LoginPage() {
       <Card className="relative w-full max-w-[440px] rounded-2xl bg-neutral-900 shadow-2xl border border-white/10">
         <CardHeader className="flex flex-col items-center gap-2 pt-8 pb-4">
           <Link to="/" className="text-2xl font-bold tracking-tight text-white mb-2">
-            <span className="text-cyan-400">26</span>ritual
+            <span className="text-primary">26</span>ritual
           </Link>
           <h2 className="text-xl font-semibold text-white">Login</h2>
           <p className="text-center text-sm text-neutral-400 max-w-xs">
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
         <CardContent className="space-y-5 px-6 pb-6">
           {justRegistered && (
-            <p className="rounded-lg bg-cyan-400/10 px-3 py-2 text-center text-sm font-medium text-cyan-400">
+            <p className="rounded-lg bg-primary/10 px-3 py-2 text-center text-sm font-medium text-primary">
               Account created! Sign in to continue.
             </p>
           )}
@@ -113,16 +113,16 @@ export default function LoginPage() {
 
           <div className="text-center text-sm text-neutral-400">
             Don&apos;t have an account?{" "}
-            <Link to="/signup" className="font-bold text-cyan-400 hover:underline">
+            <Link to="/signup" className="font-bold text-primary hover:underline">
               Register
             </Link>
           </div>
 
           <p className="px-8 text-center text-[10px] leading-relaxed text-neutral-500">
             By continuing, you agree to 26 Ritual&apos;s{" "}
-            <a href="#" className="text-cyan-400 underline underline-offset-2">Terms of Use</a>{" "}
+            <a href="#" className="text-primary underline underline-offset-2">Terms of Use</a>{" "}
             and{" "}
-            <a href="#" className="text-cyan-400 underline underline-offset-2">Privacy Policy</a>.
+            <a href="#" className="text-primary underline underline-offset-2">Privacy Policy</a>.
           </p>
         </CardContent>
       </Card>

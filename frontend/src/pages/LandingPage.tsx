@@ -121,7 +121,7 @@ const faqs: FaqItem[] = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-neutral-950 font-sans">
+    <div className="min-h-screen bg-background font-sans">
       <LandingNavbar />
 
       {/* ── Hero ── */}
@@ -140,18 +140,18 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl"
+              className="mt-6 text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl"
             >
               Where Creators
               <br />
-              Come to <span className="text-cyan-400">Earn.</span>
+              Come to <span className="text-primary">Earn.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mt-7 max-w-lg text-lg leading-relaxed text-neutral-400"
+              className="mt-7 max-w-lg text-lg leading-relaxed text-muted-foreground"
             >
               You've already built an audience. Now turn it into income — join 26ritual's
               affiliate program and earn real commissions sharing what you love.
@@ -165,13 +165,13 @@ export default function LandingPage() {
             >
               <Link
                 to="/signup"
-                className="flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-neutral-950 transition-colors hover:bg-neutral-200"
+                className="flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-base font-semibold text-background transition-colors hover:bg-secondary"
               >
                 Start Earning Today <ArrowRight size={18} />
               </Link>
               <a
                 href="#how-it-works"
-                className="rounded-full border border-white/20 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/5"
+                className="rounded-full border border-border px-7 py-3.5 text-base font-semibold text-foreground transition-colors hover:bg-foreground/5"
               >
                 Learn More
               </a>
@@ -181,16 +181,16 @@ export default function LandingPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-11 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-white/10 pt-7 text-base text-neutral-400"
+              className="mt-11 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-border pt-7 text-base text-muted-foreground"
             >
               <span className="flex items-center gap-2">
-                <LayoutGrid size={16} className="text-cyan-400" /> Real-Time Dashboard
+                <LayoutGrid size={16} className="text-primary" /> Real-Time Dashboard
               </span>
               <span className="flex items-center gap-2">
-                <Link2 size={16} className="text-cyan-400" /> Multi-Product Links
+                <Link2 size={16} className="text-primary" /> Multi-Product Links
               </span>
               <span className="flex items-center gap-2">
-                <MessageCircle size={16} className="text-cyan-400" /> Automated DMs
+                <MessageCircle size={16} className="text-primary" /> Automated DMs
               </span>
             </motion.div>
           </div>
@@ -210,7 +210,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section id="how-it-works" className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section id="how-it-works" className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-6xl">
           <SectionHeading
             eyebrow="How It Works"
@@ -222,13 +222,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Benefits ── */}
-      <section id="benefits" className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section id="benefits" className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-6xl">
           <SectionHeading
             eyebrow="Why Join"
             title={
               <>
-                Everything You Need to <span className="text-cyan-400">Succeed</span>
+                Everything You Need to <span className="text-primary">Succeed</span>
               </>
             }
             subtitle="We provide the tools and support to help you monetise your content."
@@ -242,13 +242,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── Creator Toolkit ── */}
-      <section className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-6xl">
           <SectionHeading
             eyebrow="Your Creator Toolkit"
             title={
               <>
-                Everything You Need, Right in <span className="text-cyan-400">Your Dashboard</span>
+                Everything You Need, Right in <span className="text-primary">Your Dashboard</span>
               </>
             }
             subtitle="Simple tools that help you share smarter and earn more — no extra apps, no hassle."
@@ -275,13 +275,13 @@ export default function LandingPage() {
       </section>
 
       {/* ── DM Automation ── */}
-      <section id="automation" className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section id="automation" className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-6xl">
           <SectionHeading
             eyebrow="DM Automation"
             title={
               <>
-                Turn Comments Into <span className="text-cyan-400">Conversions</span>
+                Turn Comments Into <span className="text-primary">Conversions</span>
               </>
             }
             subtitle="Set a keyword on your post — we handle the rest, automatically."
@@ -297,21 +297,21 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA (replaces the reference's waitlist form) ── */}
-      <section className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section className="border-t border-border px-4 py-24 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent px-8 py-16 text-center"
+          className="mx-auto max-w-3xl rounded-3xl border border-border bg-gradient-to-b from-white/[0.04] to-transparent px-8 py-16 text-center"
         >
-          <span className="text-xs font-semibold tracking-widest text-cyan-400 uppercase">
+          <span className="text-xs font-semibold tracking-widest text-primary uppercase">
             Get Started
           </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Ready to Turn Your Influence Into Income?
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-base text-neutral-400">
+          <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
             Join the 26ritual creator programme today, or log in if you're already part of the
             family.
           </p>
@@ -319,13 +319,13 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition-colors hover:bg-neutral-200"
+              className="flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-secondary"
             >
               Join as Creator <ArrowRight size={16} />
             </button>
             <Link
               to="/login"
-              className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+              className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/5"
             >
               Log in
             </Link>
@@ -334,7 +334,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Waitlist Form ── */}
-      <section id="waitlist" className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section id="waitlist" className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-2xl">
           <SectionHeading
             eyebrow="Join the Waitlist"
@@ -348,7 +348,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section id="faq" className="border-t border-white/10 px-4 py-24 md:px-6">
+      <section id="faq" className="border-t border-border px-4 py-24 md:px-6">
         <div className="mx-auto max-w-3xl">
           <SectionHeading
             eyebrow="FAQ"

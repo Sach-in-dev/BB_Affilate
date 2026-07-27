@@ -31,7 +31,7 @@ function LandingProductCard({ product, code, source }: { product: Product; code:
           </div>
         )}
         {off > 0 && (
-          <span className="absolute left-2 top-2 rounded-full bg-cyan-400 px-2 py-0.5 text-[10px] font-bold text-neutral-950">
+          <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold text-neutral-950">
             {off}% OFF
           </span>
         )}
@@ -101,7 +101,7 @@ export default function BundleLandingPage({
         {/* Brand bar */}
         <div className="flex items-center justify-center border-b border-border py-3">
           <span className="text-xl font-bold tracking-tight">
-            <span className="text-cyan-400">26</span>
+            <span className="text-primary">26</span>
             <span className="text-white">ritual</span>
           </span>
         </div>
@@ -109,11 +109,11 @@ export default function BundleLandingPage({
         {/* Creator profile */}
         <div className="px-4 pt-5">
           <div className="flex items-start gap-4">
-            <div className="h-[76px] w-[76px] shrink-0 overflow-hidden rounded-full border-2 border-cyan-400 p-0.5">
+            <div className="h-[76px] w-[76px] shrink-0 overflow-hidden rounded-full border-2 border-primary p-0.5">
               {creator.avatar_url ? (
                 <img src={creator.avatar_url} alt={creator.name} className="h-full w-full rounded-full object-cover" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-cyan-400 text-xl font-bold text-neutral-950">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-primary text-xl font-bold text-neutral-950">
                   {initials}
                 </div>
               )}
@@ -183,7 +183,7 @@ export default function BundleLandingPage({
                   className={cn(
                     "shrink-0 rounded-full border px-4 py-1.5 text-sm transition-colors",
                     category === c
-                      ? "border-cyan-400 bg-cyan-400 font-medium text-neutral-950"
+                      ? "border-primary bg-primary font-medium text-neutral-950"
                       : "border-border bg-background text-foreground hover:bg-muted"
                   )}
                 >
@@ -212,7 +212,7 @@ export default function BundleLandingPage({
         <div className="px-4 pt-8 text-center">
           <p className="text-xs text-muted-foreground">
             Curated by {creator.name} · Powered by{" "}
-            <span className="font-semibold text-cyan-400">26 Ritual</span>
+            <span className="font-semibold text-primary">26 Ritual</span>
           </p>
         </div>
       </div>

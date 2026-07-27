@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 // Routes that never require authentication.
-const PUBLIC_ROUTES = ["/", "/login", "/signup"];
+const PUBLIC_ROUTES = ["/", "/landing-page-1", "/login", "/signup"];
 // Prefixes that are public — /r/:code is customer traffic from social.
 const PUBLIC_PREFIXES = ["/r/"];
 

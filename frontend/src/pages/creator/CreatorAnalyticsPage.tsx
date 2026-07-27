@@ -26,7 +26,7 @@ function ClicksChart({ series }: { series: { date: string; clicks: number }[] })
         <div key={s.date} className="flex flex-1 flex-col items-center gap-2">
           <div className="flex w-full flex-1 items-end">
             <div
-              className="w-full rounded-t bg-cyan-400 transition-all"
+              className="w-full rounded-t bg-primary transition-all"
               style={{ height: `${Math.max((s.clicks / max) * 100, 4)}%` }}
               title={`${s.clicks} clicks`}
             />

@@ -30,7 +30,7 @@ export function CreatorSidebar() {
         <Link to="/dashboard" className="flex flex-col gap-1 px-3 group-data-[collapsible=icon]:hidden">
           <span className="text-lg font-bold tracking-tight">Creator Studio</span>
           <span className="text-xl font-bold tracking-tight">
-            <span className="text-cyan-400">26</span>
+            <span className="text-primary">26</span>
             <span className="text-white">ritual</span>
           </span>
         </Link>
@@ -56,7 +56,7 @@ export function CreatorSidebar() {
                     >
                       <Link to={item.href}>
                         {active && (
-                          <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-cyan-400" />
+                          <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-primary" />
                         )}
                         <item.icon className="h-4 w-4" />
                         <span>{item.label}</span>

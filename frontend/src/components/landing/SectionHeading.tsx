@@ -18,10 +18,10 @@ export function SectionHeading({ eyebrow, title, subtitle }: SectionHeadingProps
       className="mx-auto max-w-3xl text-center"
     >
       <SectionBadge>{eyebrow}</SectionBadge>
-      <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+      <h2 className="mt-5 text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
         {title}
       </h2>
-      {subtitle && <p className="mt-5 text-lg text-neutral-400">{subtitle}</p>}
+      {subtitle && <p className="mt-5 text-lg text-muted-foreground">{subtitle}</p>}
     </motion.div>
   );
 }

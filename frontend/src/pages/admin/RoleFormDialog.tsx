@@ -197,7 +197,7 @@ export function RoleFormDialog({
             <Button
               type="submit"
               disabled={!canSubmit || loading}
-              className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {loading ? <Loader2 className="animate-spin" /> : editing ? "Save changes" : "Create role"}
             </Button>

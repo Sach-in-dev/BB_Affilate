@@ -40,7 +40,7 @@ export default function SignupPage() {
       <Card className="relative w-full max-w-[440px] rounded-2xl bg-neutral-900 shadow-2xl border border-white/10">
         <CardHeader className="flex flex-col items-center gap-2 pt-8 pb-4">
           <Link to="/" className="text-2xl font-bold tracking-tight text-white mb-2">
-            <span className="text-cyan-400">26</span>ritual
+            <span className="text-primary">26</span>ritual
           </Link>
           <h2 className="text-xl font-semibold text-white">Sign Up</h2>
         </CardHeader>
@@ -99,16 +99,16 @@ export default function SignupPage() {
 
           <div className="text-center text-sm text-neutral-400">
             Already have an account?{" "}
-            <Link to="/login" className="font-bold text-cyan-400 hover:underline">
+            <Link to="/login" className="font-bold text-primary hover:underline">
               Sign In
             </Link>
           </div>
 
           <p className="px-8 text-center text-[10px] leading-relaxed text-neutral-500">
             By continuing, you agree to 26 Ritual&apos;s{" "}
-            <a href="#" className="text-cyan-400 underline underline-offset-2">Terms of Use</a>{" "}
+            <a href="#" className="text-primary underline underline-offset-2">Terms of Use</a>{" "}
             and{" "}
-            <a href="#" className="text-cyan-400 underline underline-offset-2">Privacy Policy</a>.
+            <a href="#" className="text-primary underline underline-offset-2">Privacy Policy</a>.
           </p>
         </CardContent>
       </Card>

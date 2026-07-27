@@ -10,6 +10,8 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 
 
+import { ThemeToggle } from "@/components/ThemeToggle";
+
 export default function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ export default function Header() {
       </h1>
 
       <div className="ml-auto flex items-center gap-3">
+        <ThemeToggle />
 
 
         <DropdownMenu>

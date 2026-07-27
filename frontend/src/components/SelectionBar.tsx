@@ -72,7 +72,7 @@ export function SelectionBar() {
             <Button
               onClick={generate}
               disabled={loading}
-              className="rounded-full bg-cyan-400 text-neutral-950 hover:bg-cyan-300"
+              className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
             >
               {loading ? (
                 <Loader2 size={16} className="animate-spin" />

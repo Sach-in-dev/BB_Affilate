@@ -138,7 +138,7 @@ export default function CreatorLinksPage() {
             Share these on Instagram, YouTube or anywhere — every click is tracked.
           </p>
         </div>
-        <Button asChild className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+        <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
           <Link to="/dashboard/products">
             <Plus size={16} /> New Link
           </Link>
@@ -154,7 +154,7 @@ export default function CreatorLinksPage() {
           <p className="mt-1 max-w-sm text-sm text-muted-foreground">
             Pick products from the catalog and generate your first tracking link.
           </p>
-          <Button asChild className="mt-5 bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button asChild className="mt-5 bg-primary text-primary-foreground hover:bg-primary/90">
             <Link to="/dashboard/products">Browse Products</Link>
           </Button>
         </div>

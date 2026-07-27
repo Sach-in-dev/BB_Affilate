@@ -16,29 +16,29 @@ const supportLinks = [
 
 export function LandingFooter() {
   return (
-    <footer className="border-t border-white/10 bg-neutral-950">
+    <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6">
         <div className="grid gap-10 sm:grid-cols-3">
           <div>
-            <h3 className="text-lg font-bold text-white">26ritual</h3>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-neutral-400">
+            <h3 className="text-lg font-bold text-foreground">26ritual</h3>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
               A platform for creators to grow their audience and turn it into real, recurring income.
             </p>
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+            <h4 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
               Quick Links
             </h4>
             <ul className="mt-4 space-y-2.5">
               {quickLinks.map((l) => (
                 <li key={l.label}>
                   {l.href.startsWith("#") ? (
-                    <a href={l.href} className="text-sm text-neutral-400 hover:text-white">
+                    <a href={l.href} className="text-sm text-muted-foreground hover:text-foreground">
                       {l.label}
                     </a>
                   ) : (
-                    <Link to={l.href} className="text-sm text-neutral-400 hover:text-white">
+                    <Link to={l.href} className="text-sm text-muted-foreground hover:text-foreground">
                       {l.label}
                     </Link>
                   )}
@@ -48,13 +48,13 @@ export function LandingFooter() {
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+            <h4 className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
               Support
             </h4>
             <ul className="mt-4 space-y-2.5">
               {supportLinks.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href} className="text-sm text-neutral-400 hover:text-white">
+                  <a href={l.href} className="text-sm text-muted-foreground hover:text-foreground">
                     {l.label}
                   </a>
                 </li>
@@ -63,8 +63,8 @@ export function LandingFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-center">
-          <p className="text-xs text-neutral-500">
+        <div className="mt-12 border-t border-border pt-6 text-center">
+          <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} 26ritual. All rights reserved.
           </p>
         </div>

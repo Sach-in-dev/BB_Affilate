@@ -81,7 +81,7 @@ export function UserDetailDialog({ user, onClose }: Props) {
               {user.instagram && (
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground w-24">Instagram</span>
-                  <a href={`https://instagram.com/${user.instagram}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm text-cyan-400 hover:underline">
+                  <a href={`https://instagram.com/${user.instagram}`} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm text-primary hover:underline">
                     @{user.instagram} <ExternalLink size={12} />
                   </a>
                 </div>

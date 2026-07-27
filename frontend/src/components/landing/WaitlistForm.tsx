@@ -99,9 +99,9 @@ export function WaitlistForm() {
 
   /* ── Input classes ── */
   const inputCls =
-    "w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-neutral-500 outline-none transition-colors focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/20";
-  const labelCls = "block text-sm font-semibold text-white";
-  const subLabelCls = "mt-0.5 text-xs text-neutral-500";
+    "w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary/50 focus:ring-1 focus:ring-primary/20";
+  const labelCls = "block text-sm font-semibold text-foreground";
+  const subLabelCls = "mt-0.5 text-xs text-muted-foreground";
 
   /* ── Success state ── */
   if (submitted) {
@@ -109,15 +109,15 @@ export function WaitlistForm() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="rounded-3xl border border-white/10 bg-white/[0.02] px-8 py-16 text-center"
+        className="rounded-3xl border border-border bg-card px-8 py-16 text-center"
       >
         <div className="mx-auto text-4xl">
           🎉
         </div>
-        <h3 className="mt-6 text-2xl font-bold text-white">
+        <h3 className="mt-6 text-2xl font-bold text-foreground">
           You're on the list!
         </h3>
-        <p className="mx-auto mt-3 max-w-md text-base text-neutral-400">
+        <p className="mx-auto mt-3 max-w-md text-base text-muted-foreground">
           Thank you for your interest in the 26ritual Affiliate Program. We'll
           reach out to you as soon as we launch with early access details.
         </p>
@@ -127,7 +127,7 @@ export function WaitlistForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="rounded-3xl border border-white/10 bg-white/[0.02] px-6 py-10 sm:px-10 sm:py-12">
+      <div className="rounded-3xl border border-border bg-card px-6 py-10 sm:px-10 sm:py-12">
         <div className="space-y-6">
           {/* Full Name */}
           <div>
@@ -191,11 +191,11 @@ export function WaitlistForm() {
                       onClick={() =>
                         setOpenDropdown(openDropdown === i ? null : i)
                       }
-                      className="flex h-[42px] w-44 items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-3 text-sm text-white transition-colors hover:border-white/20"
+                      className="flex h-[42px] w-44 items-center justify-between rounded-lg border border-border bg-background px-3 text-sm text-foreground transition-colors hover:border-border/80"
                     >
                       <span
                         className={
-                          entry.platform ? "text-white" : "text-neutral-500"
+                          entry.platform ? "text-foreground" : "text-muted-foreground"
                         }
                       >
                         {entry.platform || "Select platform"}
@@ -208,7 +208,7 @@ export function WaitlistForm() {
                       />
                     </button>
                     {openDropdown === i && (
-                      <div className="absolute left-0 top-full z-20 mt-1 w-48 rounded-lg border border-white/10 bg-neutral-900 py-1 shadow-xl">
+                      <div className="absolute left-0 top-full z-20 mt-1 w-48 rounded-lg border border-border bg-popover py-1 shadow-xl">
                         {PLATFORM_OPTIONS.map((opt) => (
                           <button
                             key={opt}
@@ -217,10 +217,10 @@ export function WaitlistForm() {
                               updatePlatform(i, "platform", opt);
                               setOpenDropdown(null);
                             }}
-                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-neutral-300 hover:bg-white/5 hover:text-white"
+                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-popover-foreground hover:bg-accent hover:text-accent-foreground"
                           >
                             {entry.platform === opt && (
-                              <Check size={14} className="text-cyan-400" />
+                              <Check size={14} className="text-primary" />
                             )}
                             {opt}
                           </button>
@@ -250,7 +250,7 @@ export function WaitlistForm() {
             <button
               type="button"
               onClick={addPlatform}
-              className="mt-2 flex items-center gap-1 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="mt-2 flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
               <Plus size={14} /> Add another platform
             </button>
@@ -287,7 +287,7 @@ export function WaitlistForm() {
             <button
               type="button"
               onClick={addSocialLink}
-              className="mt-2 flex items-center gap-1 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="mt-2 flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
               <Plus size={14} /> Add social media link
             </button>
@@ -316,11 +316,11 @@ export function WaitlistForm() {
                 onChange={(e) => setAgreed(e.target.checked)}
                 className="peer sr-only"
               />
-              <div className="h-[18px] w-[18px] rounded border border-white/20 bg-white/[0.03] transition-colors peer-checked:border-cyan-400 peer-checked:bg-cyan-400/10" />
+              <div className="h-[18px] w-[18px] rounded border border-border bg-background transition-colors peer-checked:border-primary peer-checked:bg-primary/10" />
               {agreed && (
                 <Check
                   size={12}
-                  className="absolute left-[3px] top-[3px] text-cyan-400"
+                  className="absolute left-[3px] top-[3px] text-primary"
                 />
               )}
             </div>
@@ -328,7 +328,7 @@ export function WaitlistForm() {
               I agree to the{" "}
               <a
                 href="#"
-                className="font-medium text-white underline underline-offset-2 hover:text-cyan-400 transition-colors"
+                className="font-medium text-foreground underline underline-offset-2 hover:text-primary transition-colors"
               >
                 Affiliate Program Terms &amp; Conditions
               </a>
@@ -344,7 +344,7 @@ export function WaitlistForm() {
           <button
             type="submit"
             disabled={!isValid || submitting}
-            className="w-full rounded-full border border-white/20 bg-white py-3.5 text-base font-bold text-neutral-950 transition-all hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-40"
+            className="w-full rounded-full border border-transparent bg-foreground py-3.5 text-base font-bold text-background transition-all hover:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {submitting ? (
               <Loader2 className="mx-auto h-5 w-5 animate-spin" />
@@ -355,7 +355,7 @@ export function WaitlistForm() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-neutral-500">
+      <p className="text-center text-sm text-muted-foreground">
         We'll review your application and get back to you within 48 hours of
         launch.
       </p>

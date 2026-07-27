@@ -57,7 +57,7 @@ export function ConfirmDialog({ title, message, requireReason, onConfirm, onCanc
 
         <div className="mt-5 flex justify-end gap-2">
           <Button variant="outline" onClick={onCancel} disabled={loading}>Cancel</Button>
-          <Button onClick={handleConfirm} disabled={loading} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button onClick={handleConfirm} disabled={loading} className="bg-primary text-primary-foreground hover:bg-primary/90">
             {loading && <Loader2 size={14} className="animate-spin" />}
             Confirm
           </Button>

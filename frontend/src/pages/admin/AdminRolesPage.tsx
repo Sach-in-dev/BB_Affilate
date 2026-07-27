@@ -83,7 +83,7 @@ export default function AdminRolesPage() {
             Create and manage custom roles to control admin access.
           </p>
         </div>
-        <Button onClick={openCreate} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+        <Button onClick={openCreate} className="bg-primary text-primary-foreground hover:bg-primary/90">
           <Plus size={16} /> Add Custom Role
         </Button>
       </div>
@@ -98,7 +98,7 @@ export default function AdminRolesPage() {
                   {r.is_system ? (
                     <div title="System Role"><ShieldAlert size={18} className="text-destructive" /></div>
                   ) : (
-                    <div title="Custom Role"><ShieldCheck size={18} className="text-cyan-400" /></div>
+                    <div title="Custom Role"><ShieldCheck size={18} className="text-primary" /></div>
                   )}
                   <span className="font-semibold text-lg">{r.label}</span>
                 </div>

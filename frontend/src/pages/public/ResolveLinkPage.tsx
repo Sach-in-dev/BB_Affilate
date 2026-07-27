@@ -43,7 +43,7 @@ export default function ResolveLinkPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-neutral-950 px-6 text-center">
         <span className="text-2xl font-bold tracking-tight">
-          <span className="text-cyan-400">26</span>
+          <span className="text-primary">26</span>
           <span className="text-white">ritual</span>
         </span>
         <div className="mt-8 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-800 text-neutral-400">
@@ -53,7 +53,7 @@ export default function ResolveLinkPage() {
         <p className="mt-1 max-w-sm text-sm text-neutral-400">{error}</p>
         <a
           href="https://beautybarn.in"
-          className="mt-6 rounded-full bg-cyan-400 px-6 py-2.5 text-sm font-medium text-neutral-950 hover:bg-cyan-300"
+          className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
         >
           Shop 26 Ritual
         </a>
@@ -65,10 +65,10 @@ export default function ResolveLinkPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-neutral-950">
         <span className="text-2xl font-bold tracking-tight">
-          <span className="text-cyan-400">26</span>
+          <span className="text-primary">26</span>
           <span className="text-white">ritual</span>
         </span>
-        <Loader2 className="h-5 w-5 animate-spin text-cyan-400" />
+        <Loader2 className="h-5 w-5 animate-spin text-primary" />
         <p className="text-sm text-neutral-400">Taking you to the products…</p>
       </div>
     );

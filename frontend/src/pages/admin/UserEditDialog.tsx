@@ -146,7 +146,7 @@ export function UserEditDialog({ user, onClose, onSaved }: Props) {
 
         <div className="mt-6 flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleSave} disabled={saving} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button onClick={handleSave} disabled={saving} className="bg-primary text-primary-foreground hover:bg-primary/90">
             {saving && <Loader2 size={14} className="animate-spin" />}
             Save Changes
           </Button>

@@ -257,7 +257,7 @@ export default function UserManagementPage() {
           <StatCard icon={Users} label="Total Creators" value={stats.total_users} />
           <StatCard icon={Clock} label="Pending" value={stats.pending_approvals} className="text-amber-500" />
           <StatCard icon={UserCheck} label="Approved" value={stats.approved_creators} className="text-green-500" />
-          <StatCard icon={CheckCircle2} label="Active" value={stats.active_users} className="text-cyan-500" />
+          <StatCard icon={CheckCircle2} label="Active" value={stats.active_users} className="text-primary" />
           <StatCard icon={Ban} label="Suspended" value={stats.suspended_users} className="text-red-500" />
           <StatCard icon={UserX} label="Rejected" value={stats.rejected_users} className="text-rose-500" />
         </div>
@@ -275,7 +275,7 @@ export default function UserManagementPage() {
           <Button variant="outline" size="sm" onClick={handleExport}>
             <Download size={15} /> Export CSV
           </Button>
-          <Button size="sm" onClick={() => setCreateOpen(true)} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button size="sm" onClick={() => setCreateOpen(true)} className="bg-primary text-primary-foreground hover:bg-primary/90">
             <Plus size={15} /> Add Creator
           </Button>
         </div>
@@ -297,7 +297,7 @@ export default function UserManagementPage() {
             variant="outline"
             size="sm"
             onClick={() => setShowFilters(!showFilters)}
-            className={showFilters ? "border-cyan-400 text-cyan-400" : ""}
+            className={showFilters ? "border-primary text-primary" : ""}
           >
             <Filter size={15} /> Filters
           </Button>
@@ -336,7 +336,7 @@ export default function UserManagementPage() {
 
       {/* Bulk Actions Bar */}
       {selected.size > 0 && (
-        <div className="flex items-center gap-3 rounded-lg border border-cyan-400/30 bg-cyan-400/5 p-3">
+        <div className="flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/5 p-3">
           <span className="text-sm font-medium">{selected.size} selected</span>
           <div className="relative">
             <Button size="sm" variant="outline" onClick={() => setBulkMenuOpen(!bulkMenuOpen)}>
@@ -472,7 +472,7 @@ export default function UserManagementPage() {
                           </Button>
                         )}
                         {u.is_deleted ? (
-                          <Button variant="ghost" size="sm" onClick={() => handleRestore(u)} title="Restore" className="text-cyan-400">
+                          <Button variant="ghost" size="sm" onClick={() => handleRestore(u)} title="Restore" className="text-primary">
                             <RotateCcw size={15} />
                           </Button>
                         ) : (
@@ -676,7 +676,7 @@ function CreateCreatorDialog({ onClose, onCreated }: { onClose: () => void; onCr
 
         <div className="mt-6 flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleSave} disabled={saving} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button onClick={handleSave} disabled={saving} className="bg-primary text-primary-foreground hover:bg-primary/90">
             {saving && <Loader2 size={14} className="animate-spin" />}
             Create Creator
           </Button>

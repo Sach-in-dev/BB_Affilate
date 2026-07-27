@@ -29,7 +29,7 @@ const statCards = [
 
 function BannerCard({ banner }: { banner: Banner }) {
   const inner = (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-500/20 to-cyan-400/10 border border-cyan-400/20 px-6 py-6 text-white">
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/20 px-6 py-6 text-white">
       {banner.image_url && (
         <img
           src={banner.image_url}
@@ -118,7 +118,7 @@ export default function CreatorHomePage() {
         <div className="lg:col-span-2">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-semibold text-foreground">Your Top Products</h3>
-            <Link to="/dashboard/products" className="flex items-center gap-1 text-sm text-cyan-400 hover:underline">
+            <Link to="/dashboard/products" className="flex items-center gap-1 text-sm text-primary hover:underline">
               Browse all <ArrowRight size={14} />
             </Link>
           </div>
@@ -183,7 +183,7 @@ export default function CreatorHomePage() {
         <div>
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-semibold text-foreground">Trending Products</h3>
-            <Link to="/dashboard/products" className="flex items-center gap-1 text-sm text-cyan-400 hover:underline">
+            <Link to="/dashboard/products" className="flex items-center gap-1 text-sm text-primary hover:underline">
               See all <ArrowRight size={14} />
             </Link>
           </div>

@@ -1,21 +1,54 @@
-# OS
+# OS / System Files
 .DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 # Environment variables
 .env
 .env.*
 !*.example
 
+# IDE / Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
 # Backend (Python/FastAPI)
 backend/venv/
-backend/__pycache__/
-backend/**/__pycache__/
+backend/.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 backend/*.db
 backend/.env
 backend/.env.*
 !backend/.env.example
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Frontend (Vite/React)
+node_modules
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.eslintcache
+
+# BB Creator (Static HTML/CSS)
+bb-creator/node_modules/
+bb-creator/dist/
+
+# Gemini / AI Tools
+.claude/
+.gemini/

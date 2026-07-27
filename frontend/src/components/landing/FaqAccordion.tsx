@@ -23,15 +23,15 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.4, delay: i * 0.04, ease: "easeOut" }}
             className={`overflow-hidden rounded-xl border transition-colors duration-200 ${
-              isOpen ? "border-white/20 bg-white/[0.04]" : "border-white/10 bg-white/[0.02]"
+              isOpen ? "border-border bg-muted/50" : "border-border bg-card"
             }`}
           >
             <button
               onClick={() => setOpenIndex(isOpen ? null : i)}
               className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
             >
-              <span className="font-semibold text-white">{item.q}</span>
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center text-neutral-400">
+              <span className="font-semibold text-foreground">{item.q}</span>
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center text-muted-foreground">
                 {isOpen ? <X size={16} /> : <Plus size={16} />}
               </span>
             </button>
@@ -43,7 +43,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.25, ease: "easeInOut" }}
                 >
-                  <p className="px-6 pb-5 text-sm leading-relaxed text-neutral-400">{item.a}</p>
+                  <p className="px-6 pb-5 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
                 </motion.div>
               )}
             </AnimatePresence>

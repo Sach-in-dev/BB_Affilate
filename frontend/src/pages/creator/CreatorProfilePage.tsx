@@ -81,7 +81,7 @@ export default function CreatorProfilePage() {
           <p className="font-semibold text-foreground">
             {profile.first_name} {profile.last_name}
           </p>
-          {profile.handle && <p className="text-sm text-cyan-400">@{profile.handle}</p>}
+          {profile.handle && <p className="text-sm text-primary">@{profile.handle}</p>}
           {profile.bio && <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{profile.bio}</p>}
         </div>
       </div>
@@ -178,7 +178,7 @@ export default function CreatorProfilePage() {
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div className="flex items-center gap-3">
-          <Button type="submit" disabled={saving} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button type="submit" disabled={saving} className="bg-primary text-primary-foreground hover:bg-primary/90">
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
             {saved ? "Saved" : "Save changes"}
           </Button>

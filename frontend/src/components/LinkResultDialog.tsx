@@ -55,7 +55,7 @@ export function LinkResultDialog({
             value={link.url}
             className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none"
           />
-          <Button size="sm" onClick={copy} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+          <Button size="sm" onClick={copy} className="bg-primary text-primary-foreground hover:bg-primary/90">
             {copied ? <Check size={15} /> : <Copy size={15} />}
             {copied ? "Copied" : "Copy"}
           </Button>
@@ -69,7 +69,7 @@ export function LinkResultDialog({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-sm text-cyan-400 hover:underline"
+            className="flex items-center gap-1 text-sm text-primary hover:underline"
           >
             Preview <ExternalLink size={13} />
           </a>

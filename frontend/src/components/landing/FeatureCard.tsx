@@ -19,13 +19,13 @@ export function FeatureCard({ icon: Icon, title, description, linkChip, index = 
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       whileHover={{ y: -3 }}
-      className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors duration-200 hover:border-white/20 hover:bg-white/[0.05]"
+      className="rounded-2xl border border-border bg-foreground/[0.03] p-6 transition-colors duration-200 hover:border-border hover:bg-foreground/[0.05]"
     >
-      <Icon className="h-6 w-6 text-white" strokeWidth={1.75} />
-      <h3 className="mt-4 font-semibold text-white">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-neutral-400">{description}</p>
+      <Icon className="h-6 w-6 text-foreground" strokeWidth={1.75} />
+      <h3 className="mt-4 font-semibold text-foreground">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
       {linkChip && (
-        <div className="mt-4 flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-xs text-neutral-400">
+        <div className="mt-4 flex items-center gap-2 rounded-lg border border-border bg-black/40 px-3 py-2 text-xs text-muted-foreground">
           <span className="flex-1 truncate">{linkChip}</span>
           <Copy className="h-3.5 w-3.5 shrink-0" />
         </div>

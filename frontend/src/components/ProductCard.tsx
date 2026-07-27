@@ -38,7 +38,7 @@ export function ProductCard({ product, selected, onToggle, compact }: Props) {
           </div>
         )}
         {off > 0 && (
-          <span className="absolute left-2 top-2 rounded-full bg-cyan-400 px-2 py-0.5 text-[11px] font-semibold text-neutral-950">
+          <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[11px] font-semibold text-neutral-950">
             {off}% OFF
           </span>
         )}
@@ -55,7 +55,7 @@ export function ProductCard({ product, selected, onToggle, compact }: Props) {
               "absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full shadow-md transition-colors",
               selected
                 ? "bg-primary text-primary-foreground"
-                : "bg-white/90 text-cyan-500 hover:bg-white"
+                : "bg-white/90 text-primary hover:bg-white"
             )}
           >
             {selected ? <Check size={16} /> : <Plus size={16} />}
@@ -97,7 +97,7 @@ export function ProductCard({ product, selected, onToggle, compact }: Props) {
             "border-t py-2 text-sm font-medium transition-colors",
             selected
               ? "bg-primary/10 text-primary"
-              : "text-cyan-400 hover:bg-muted"
+              : "text-primary hover:bg-muted"
           )}
         >
           {selected ? "Selected" : "Select"}

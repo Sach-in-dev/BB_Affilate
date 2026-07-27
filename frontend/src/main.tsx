@@ -5,6 +5,7 @@ import "./index.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 import LandingPage from "@/pages/LandingPage";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import ResolveLinkPage from "@/pages/public/ResolveLinkPage";
@@ -26,41 +27,43 @@ import ComingSoonPage from "@/pages/admin/ComingSoonPage";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          {/* Public */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          {/* Shared affiliate link — customer entry point */}
-          <Route path="/r/:code" element={<ResolveLinkPage />} />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <Routes>
+            {/* Public */}
+            <Route path="/landing-page-1" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            {/* Shared affiliate link — customer entry point */}
+            <Route path="/r/:code" element={<ResolveLinkPage />} />
 
-          {/* Creator studio */}
-          <Route path="/dashboard" element={<CreatorLayout />}>
-            <Route index element={<CreatorHomePage />} />
-            <Route path="products" element={<CreatorProductsPage />} />
-            <Route path="links" element={<CreatorLinksPage />} />
-            <Route path="analytics" element={<CreatorAnalyticsPage />} />
-            <Route path="profile" element={<CreatorProfilePage />} />
-          </Route>
+            {/* Creator studio */}
+            <Route path="/dashboard" element={<CreatorLayout />}>
+              <Route index element={<CreatorHomePage />} />
+              <Route path="products" element={<CreatorProductsPage />} />
+              <Route path="links" element={<CreatorLinksPage />} />
+              <Route path="analytics" element={<CreatorAnalyticsPage />} />
+              <Route path="profile" element={<CreatorProfilePage />} />
+            </Route>
 
-          {/* Admin portal */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboardPage />} />
-            <Route path="users" element={<RolesPermissionsPage />} />
-            <Route path="roles" element={<AdminRolesPage />} />
-            <Route path="commissions" element={<ComingSoonPage title="Commissions" />} />
-            <Route path="campaigns" element={<ComingSoonPage title="Campaigns" />} />
-            <Route path="products" element={<ComingSoonPage title="Products" />} />
-            <Route path="creators" element={<UserManagementPage />} />
-            <Route path="banners" element={<ComingSoonPage title="Banners" />} />
-            <Route path="links" element={<ComingSoonPage title="Links" />} />
-            <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
-          </Route>
+            {/* Admin portal */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="users" element={<RolesPermissionsPage />} />
+              <Route path="roles" element={<AdminRolesPage />} />
+              <Route path="commissions" element={<ComingSoonPage title="Commissions" />} />
+              <Route path="campaigns" element={<ComingSoonPage title="Campaigns" />} />
+              <Route path="products" element={<ComingSoonPage title="Products" />} />
+              <Route path="creators" element={<UserManagementPage />} />
+              <Route path="banners" element={<ComingSoonPage title="Banners" />} />
+              <Route path="links" element={<ComingSoonPage title="Links" />} />
+              <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
+            </Route>
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AuthProvider>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>
 );

@@ -19,7 +19,7 @@ export function StepTimeline({ steps }: { steps: Step[] }) {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.1, ease: "easeInOut" }}
-          className="h-full origin-left bg-gradient-to-r from-cyan-400/80 to-cyan-400/10"
+          className="h-full origin-left bg-gradient-to-r from-primary/80 to-primary/10"
         />
       </div>
 
@@ -32,14 +32,14 @@ export function StepTimeline({ steps }: { steps: Step[] }) {
           transition={{ duration: 0.5, delay: i * 0.15, ease: "easeOut" }}
           className="relative flex flex-col items-center text-center"
         >
-          <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-neutral-950 text-white">
+          <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-card text-foreground">
             <s.icon className="h-6 w-6" strokeWidth={1.75} />
           </span>
           <span className="mt-4 text-xs font-semibold tracking-widest text-neutral-500 uppercase">
             {s.step}
           </span>
-          <h3 className="mt-2 font-semibold text-white">{s.title}</h3>
-          <p className="mt-2 max-w-[16rem] text-sm leading-relaxed text-neutral-400">{s.desc}</p>
+          <h3 className="mt-2 font-semibold text-foreground">{s.title}</h3>
+          <p className="mt-2 max-w-[16rem] text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
         </motion.div>
       ))}
     </div>

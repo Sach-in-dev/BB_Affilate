@@ -90,7 +90,7 @@ export default function AdminUsersPage() {
             Manage admin users and assign roles to control their access.
           </p>
         </div>
-        <Button onClick={openCreate} className="bg-cyan-400 text-neutral-950 hover:bg-cyan-300">
+        <Button onClick={openCreate} className="bg-primary text-primary-foreground hover:bg-primary/90">
           <Plus size={16} /> Add Admin User
         </Button>
       </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
@@ -22,11 +23,11 @@ export function LandingNavbar() {
   return (
     <nav
       className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "border-b border-white/10 bg-neutral-950/80 backdrop-blur-md" : "bg-transparent"
+        scrolled ? "border-b border-border bg-background/80 backdrop-blur-md" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link to="/" className="text-2xl font-bold tracking-tight text-white">
+        <Link to="/" className="text-2xl font-bold tracking-tight text-foreground">
           26ritual
         </Link>
 
@@ -35,18 +36,19 @@ export function LandingNavbar() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-neutral-400 transition-colors hover:text-white"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {l.label}
             </a>
           ))}
-          <Link to="/login" className="text-sm text-neutral-400 transition-colors hover:text-white">
+          <Link to="/login" className="text-sm text-foreground/70 transition-colors hover:text-foreground">
             Log in
           </Link>
+          <ThemeToggle />
           <button
             type="button"
             onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
-            className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-neutral-950 transition-colors hover:bg-neutral-200"
+            className="rounded-full bg-foreground px-5 py-2 text-sm font-semibold text-background transition-colors hover:bg-secondary"
           >
             Join as Creator
           </button>
@@ -54,7 +56,7 @@ export function LandingNavbar() {
 
         <button
           onClick={() => setMobileOpen((o) => !o)}
-          className="text-white md:hidden"
+          className="text-foreground md:hidden"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -62,18 +64,18 @@ export function LandingNavbar() {
       </div>
 
       {mobileOpen && (
-        <div className="flex flex-col gap-1 border-t border-white/10 bg-neutral-950 px-4 pb-4 md:hidden">
+        <div className="flex flex-col gap-1 border-t border-border bg-background px-4 pb-4 md:hidden">
           {navLinks.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setMobileOpen(false)}
-              className="py-2.5 text-sm text-neutral-300"
+              className="py-2.5 text-sm text-foreground/80"
             >
               {l.label}
             </a>
           ))}
-          <Link to="/login" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm text-neutral-300">
+          <Link to="/login" onClick={() => setMobileOpen(false)} className="py-2.5 text-sm text-foreground/80">
             Log in
           </Link>
           <button
@@ -82,7 +84,7 @@ export function LandingNavbar() {
               setMobileOpen(false);
               document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="mt-2 rounded-full bg-white px-5 py-2.5 text-center text-sm font-semibold text-neutral-950"
+            className="mt-2 rounded-full bg-foreground px-5 py-2.5 text-center text-sm font-semibold text-background"
           >
             Join as Creator
           </button>
