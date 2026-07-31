@@ -23,6 +23,7 @@ import RolesPermissionsPage from "@/pages/admin/RolesPermissionsPage";
 import AdminRolesPage from "@/pages/admin/AdminRolesPage";
 import UserManagementPage from "@/pages/admin/UserManagementPage";
 import ComingSoonPage from "@/pages/admin/ComingSoonPage";
+import WaitlistPage from "@/pages/admin/WaitlistPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -58,6 +59,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="banners" element={<ComingSoonPage title="Banners" />} />
               <Route path="links" element={<ComingSoonPage title="Links" />} />
               <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
+              <Route path="waitlist" element={<WaitlistPage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

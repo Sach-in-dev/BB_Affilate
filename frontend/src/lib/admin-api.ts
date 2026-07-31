@@ -204,4 +204,29 @@ export const adminApi = {
     api.get(`/admin/creator-management/users/${id}/activity`, { params: { page } }).then((r) => r.data.data as { logs: ActivityLog[]; total: number; page: number; page_size: number }),
   exportUsers: (params: UserListParams = {}) =>
     api.get("/admin/creator-management/export", { params, responseType: "blob" }).then((r) => r.data),
+
+  // ── Waitlist ──
+  getWaitlist: (params: { page?: number; page_size?: number; search?: string } = {}) =>
+    api.get("/admin/waitlist", { params }).then((r) => r.data.data as WaitlistListResponse),
+  deleteWaitlistEntry: (id: string) =>
+    api.delete(`/admin/waitlist/${id}`).then((r) => r.data.data),
 };
+
+export interface WaitlistEntry {
+  id: string;
+  name: string;
+  email: string;
+  instagram_link: string;
+  platforms: string | null;
+  social_links: string | null;
+  additional_info: string | null;
+  created_at: string | null;
+}
+
+export interface WaitlistListResponse {
+  entries: WaitlistEntry[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}

@@ -840,20 +840,19 @@ async function submitExactWaitlist(e) {
   const payload = {
     name: document.getElementById('wlName').value.trim(),
     email: document.getElementById('wlEmail').value.trim(),
-    instagramLink: document.getElementById('wlInsta').value.trim(),
+    instagram_link: document.getElementById('wlInsta').value.trim(),
     platforms: platforms.filter(p => p.platform).map(p => `${p.platform}${p.details ? ` — ${p.details}` : ''}`).join('; '),
-    socialLinks: socialLinks.filter(s => s.trim()).join(', '),
-    additionalInfo: document.getElementById('wlAdditional').value.trim()
+    social_links: socialLinks.filter(s => s.trim()).join(', '),
+    additional_info: document.getElementById('wlAdditional').value.trim()
   };
-  
+
   try {
-    const formData = new URLSearchParams(payload);
-    await fetch("https://script.google.com/macros/s/AKfycbyhChyRJpSdCg6xi9UWuwahEG9IfNiq9KNP42-ZeW6UskNtoLc-o8SWs0TBkBoScUzAJA/exec", {
+    const res = await fetch("/api/public/waitlist", {
       method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: formData.toString(),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+    if (!res.ok) throw new Error("Submission failed");
     success.style.display = "block";
     document.getElementById('waitlistForm').reset();
     platforms = [{ platform: "", details: "" }];

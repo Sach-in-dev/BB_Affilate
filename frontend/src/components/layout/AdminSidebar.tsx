@@ -10,6 +10,7 @@ import {
   Image,
   LinkIcon,
   BarChart3,
+  ClipboardList,
 } from "lucide-react";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -38,6 +39,7 @@ const menuItems = [
   { label: "Banners", icon: Image, href: "/admin/banners", perm: "manage_banners" },
   { label: "Links", icon: LinkIcon, href: "/admin/links", perm: "manage_links" },
   { label: "Analytics", icon: BarChart3, href: "/admin/analytics", perm: "view_analytics" },
+  { label: "Waitlist", icon: ClipboardList, href: "/admin/waitlist", perm: null },
 ];
 
 export function AdminSidebar() {
