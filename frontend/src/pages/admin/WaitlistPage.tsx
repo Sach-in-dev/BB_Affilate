@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Search, Trash2, ExternalLink, ChevronLeft, ChevronRight, ClipboardList } from "lucide-react";
+import { Search, Trash2, ExternalLink, ChevronLeft, ChevronRight, ClipboardList, Download } from "lucide-react";
 import { adminApi, WaitlistEntry, WaitlistListResponse } from "@/lib/admin-api";
 
 export default function WaitlistPage() {
@@ -23,6 +23,16 @@ export default function WaitlistPage() {
   const handleSearch = (v: string) => {
     setSearch(v);
     setPage(1);
+  };
+
+  const handleExport = async () => {
+    const blob = await adminApi.exportWaitlist({ search: search || undefined });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "waitlist_export.csv";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleDelete = async (id: string) => {
@@ -53,8 +63,9 @@ export default function WaitlistPage() {
         </div>
       </div>
 
-      {/* Search */}
-      <div className="relative max-w-sm">
+      {/* Search + Export */}
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="relative max-w-sm flex-1 min-w-[200px]">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
@@ -63,6 +74,14 @@ export default function WaitlistPage() {
           onChange={(e) => handleSearch(e.target.value)}
           className="w-full rounded-md border bg-background py-2 pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-primary/50"
         />
+      </div>
+        <button
+          onClick={handleExport}
+          className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          <Download size={16} />
+          Export CSV
+        </button>
       </div>
 
       {/* Table */}

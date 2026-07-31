@@ -1,4 +1,8 @@
+import csv
+import io
+
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import StreamingResponse
 from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -82,6 +86,48 @@ async def list_waitlist(
             "total_pages": total_pages,
         }
     }
+
+
+@router.get("/admin/waitlist/export")
+async def export_waitlist(
+    search: str | None = None,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.user_type != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+
+    query = select(WaitlistEntry)
+    if search:
+        like = f"%{search}%"
+        query = query.where(
+            WaitlistEntry.name.ilike(like)
+            | WaitlistEntry.email.ilike(like)
+            | WaitlistEntry.instagram_link.ilike(like)
+        )
+
+    rows = await db.scalars(query.order_by(desc(WaitlistEntry.created_at)))
+
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["Name", "Email", "Instagram", "Platforms", "Social Links", "Additional Info", "Date"])
+    for e in rows.all():
+        writer.writerow([
+            e.name,
+            e.email,
+            e.instagram_link,
+            e.platforms or "",
+            e.social_links or "",
+            e.additional_info or "",
+            e.created_at.strftime("%Y-%m-%d %H:%M") if e.created_at else "",
+        ])
+
+    buf.seek(0)
+    return StreamingResponse(
+        buf,
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=waitlist_export.csv"},
+    )
 
 
 @router.delete("/admin/waitlist/{entry_id}", response_model=dict)

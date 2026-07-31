@@ -210,6 +210,8 @@ export const adminApi = {
     api.get("/admin/waitlist", { params }).then((r) => r.data.data as WaitlistListResponse),
   deleteWaitlistEntry: (id: string) =>
     api.delete(`/admin/waitlist/${id}`).then((r) => r.data.data),
+  exportWaitlist: (params: { search?: string } = {}) =>
+    api.get("/admin/waitlist/export", { params, responseType: "blob" }).then((r) => r.data),
 };
 
 export interface WaitlistEntry {
