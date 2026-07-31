@@ -1,6 +1,6 @@
 # BeautyBarn (BB) Affiliate Platform — Project Context
 
-> A full-stack affiliate marketing platform for [BeautyBarn](https://beautybarn.in), India's #1 K-Beauty destination. Creators (influencers) generate trackable affiliate links for beauty products and earn commissions on conversions. Admins manage users, products, roles, and campaigns.
+> A full-stack affiliate marketing platform for [BeautyBarn](https://beautybarn.in) / [26 Ritual](https://beta.26ritual.com), India's #1 K-Beauty destination. Creators (influencers) generate trackable affiliate links for beauty products and earn commissions on conversions. Admins manage users, products, roles, and campaigns.
 
 ---
 
@@ -8,11 +8,12 @@
 
 | Layer | Technology | Version |
 |---|---|---|
-| **Frontend** | React + TypeScript | React 19, TS 5.8 |
+| **Frontend (SPA)** | React + TypeScript | React 19, TS 5.8 |
+| **Frontend (Landing)** | Static HTML/CSS/JS (vanilla) | — |
 | **Build Tool** | Vite | 6.3 |
-| **Styling** | Tailwind CSS v4 (via `@tailwindcss/vite`) | 4.1 |
+| **Styling** | Tailwind CSS v4 (via `@tailwindcss/vite`) + custom CSS design system | 4.1 |
 | **UI Components** | Radix UI primitives + custom components | — |
-| **Animations** | Framer Motion | 12.x |
+| **Animations** | Framer Motion (SPA) + vanilla JS scroll/parallax (landing) | 12.x |
 | **Routing** | React Router DOM | 7.6 |
 | **HTTP Client** | Axios (with JWT interceptor) | 1.14 |
 | **Backend** | FastAPI (Python) | 0.115 |
@@ -21,7 +22,7 @@
 | **Auth** | JWT (python-jose) + bcrypt | — |
 | **Server** | Uvicorn | 0.30 |
 | **Containerization** | Docker + Docker Compose | — |
-| **Reverse Proxy** | Nginx (frontend serving + API proxy) | Alpine |
+| **Reverse Proxy** | Nginx (static landing + SPA serving + API proxy) | Alpine |
 | **Deployment** | DigitalOcean Droplet (rsync + Docker) | — |
 
 ---
@@ -79,34 +80,50 @@ BB_Affiliate/
 │           ├── links.py          # Link code generation logic
 │           └── product_sync.py   # Sync products from BB production DB
 │
-└── frontend/                     # React SPA
+└── frontend/                     # React SPA + Static Landing Page
     ├── Dockerfile                # Multi-stage: node:20-alpine build → nginx:alpine serve
-    ├── nginx.conf                # Nginx config: static assets, /api proxy, SPA fallback
+    ├── nginx.conf                # Dev nginx: static landing at /, SPA fallback, /api proxy
+    ├── nginx.prod.conf           # Prod nginx: SSL (Let's Encrypt), HTTPS redirect, same routing
     ├── package.json
     ├── vite.config.ts            # Vite config with /api proxy to :8001
     ├── index.html
     ├── public/
-    │   └── images/               # Generated product images (hero + brands)
+    │   ├── landing.html          # Static landing page (served at / by nginx, bypasses React SPA)
+    │   ├── css/
+    │   │   └── styles.css        # Landing page design system (terra/ink palette, typography, layouts)
+    │   ├── js/
+    │   │   ├── main.js           # Landing page interactivity (carousel, calculator, FAQ, scroll effects)
+    │   │   └── motion.js         # Landing page animation utilities
+    │   ├── assets/
+    │   │   ├── brand/            # BeautyBarn/26Ritual logos, brand imagery
+    │   │   ├── creators/         # Creator profile photos (.webp)
+    │   │   ├── home/             # Landing page images (testimonials, earning cards, demo video)
+    │   │   ├── streamers/        # Streamer imagery
+    │   │   ├── fonts/            # Custom fonts (Playfair Display, DM Sans, DM Mono)
+    │   │   ├── img/              # Misc images
+    │   │   └── video/            # Demo videos
+    │   └── images/               # Legacy product images (hero + brands)
     └── src/
-        ├── main.tsx              # App entry: BrowserRouter + AuthProvider + Routes
-        ├── index.css             # Tailwind v4 imports + CSS custom properties
+        ├── main.tsx              # App entry: BrowserRouter + ThemeProvider + AuthProvider + Routes
+        ├── index.css             # Tailwind v4 imports + 26 Ritual branded CSS custom properties (terra/ink palette)
         ├── contexts/
         │   ├── AuthContext.tsx    # Auth state, route guards, JWT session
-        │   └── SelectionContext.tsx # Multi-product selection state for link generation
+        │   ├── SelectionContext.tsx # Multi-product selection state for link generation
+        │   └── ThemeContext.tsx   # Dark/light/system theme provider (persists to localStorage)
         ├── lib/
         │   ├── axios.ts          # Axios instance with Bearer token interceptor
         │   ├── creator-api.ts    # Creator API functions
-        │   ├── admin-api.ts      # Admin API functions (users, roles, permissions)
+        │   ├── admin-api.ts      # Admin API functions (users, roles, permissions, creator management)
         │   ├── public-api.ts     # Public API functions
         │   └── utils.ts          # cn() utility (clsx + tailwind-merge)
         ├── hooks/
         │   └── use-mobile.ts     # Mobile breakpoint hook
         ├── components/
-        │   ├── ThemeToggle.tsx    # Dark/light mode toggle (defaults dark)
+        │   ├── ThemeToggle.tsx    # Dark/light mode toggle (Sun/Moon icons)
         │   ├── ProductCard.tsx    # Reusable product card
         │   ├── SelectionBar.tsx   # Multi-select action bar
         │   ├── LinkResultDialog.tsx # Post-link-creation dialog
-        │   ├── landing/          # Landing page sub-components
+        │   ├── landing/          # React landing page sub-components (served at /landing-page-1)
         │   │   ├── LandingNavbar.tsx
         │   │   ├── SectionBadge.tsx
         │   │   ├── SectionHeading.tsx
@@ -117,10 +134,10 @@ BB_Affiliate/
         │   │   ├── WaitlistForm.tsx       # Creator waitlist form → Google Sheets
         │   │   ├── AutomationDemo.tsx     # Comment-to-DM automation preview cards
         │   │   └── DashboardMock.tsx      # Floating hero dashboard mock
-        │   ├── layout/           # CreatorLayout, AdminLayout, Sidebars, Header
+        │   ├── layout/           # CreatorLayout, AdminLayout, Sidebars ("26ritual" branding), Header
         │   └── ui/               # Radix-based primitives (button, card, dialog, etc.)
         └── pages/
-            ├── LandingPage.tsx    # Public marketing page with waitlist
+            ├── LandingPage.tsx    # React landing page (now at /landing-page-1, replaced by static landing at /)
             ├── LoginPage.tsx      # Auth: login form
             ├── SignupPage.tsx     # Auth: registration form
             ├── public/
@@ -149,6 +166,50 @@ BB_Affiliate/
 
 ## Architecture
 
+### Dual Landing Page Architecture
+The platform has two landing pages:
+1. **Static landing page** (`public/landing.html`) — served at `/` by nginx (bypasses React SPA entirely). A fully standalone HTML/CSS/JS page branded as "26 Ritual" with its own design system. See **Static Landing Page Sections** below for full details.
+2. **React landing page** (`LandingPage.tsx`) — now served at `/landing-page-1`. Uses React components (LandingNavbar, WaitlistForm, DashboardMock, etc.).
+
+Nginx routing: `location = /` → `try_files /landing.html =404`. All other routes fall through to the React SPA via `try_files $uri $uri/ /index.html`.
+
+### Static Landing Page Sections (top to bottom)
+The primary public-facing page (`landing.html`) has the following sections:
+
+1. **Nav** — "26 Ritual" brand logo, Login link, "Join as Creator" CTA button, mobile hamburger menu with slide-down panel (Creators, Resources, Auth groups)
+2. **Hero** — Gradient background with grid overlay and glow effect. Eyebrow pill badge ("EARN UP TO 20% COMMISSION — INDIA'S K-BEAUTY CREATOR NETWORK"), headline "Where Beauty Creators Come to Earn.", subtext, and CTA button
+3. **Industry** — "Every Skin Type. One Community." Two horizontally auto-scrolling rows of category tiles with brand images (Skincare, Acne Care, K-Beauty, Anti-Aging, Makeup, Haircare, Wellness, Sunscreen, Routines, Reviews, etc.)
+4. **Dashboard Preview** — "Think and Operate Like An Entrepreneur" with a 4-panel bento grid: Audience Broadcasts (with mini earning rows), Real-Time Earnings (live animated feed), Content Library (with chip tags), Smart Scheduler (with calendar grid)
+5. **Monetize / Bento Grid** — "Monetize What Moves You" with 7 cards: Affiliate Commissions (featured), Brand Collabs, Skin Consults, Live Shopping, Community Groups, Curated Edits, Exclusive Discount Codes
+6. **Earnings Calculator** — Interactive calculator with two sliders (audience size 100–50K, avg order value ₹300–₹5,000), calculates monthly/yearly earnings at 8% conversion and 20% commission, animated number tweening
+7. **Chat / Connect** — "Connect More, Earn More" with a phone-style device mockup showing a group chat UI (Skinbee Circle), chat bubbles, locked content unlocking, live avatar animations, community sales counter (₹12.4L)
+8. **Everything In One Place** — "Power Features To Increase Revenue" with a product image, floating earnings chip (₹54,300 with +12.5% growth sparkline), and creator testimonial bubble
+9. **Brands Marquee** — Infinite-scroll brand logo marquee: COSRX, AXIS-Y, Beauty of Joseon, VT Cosmetics, I'm from
+10. **Content Protection / Creator Tools** — "Powerful Tools & Real Creator Support" with 4 feature items: Verified Links, Performance Analytics, Dedicated Creator Support, On-Time Payouts
+11. **FAQ** — 5 accordion items: commission rates, referral program, payout speed, minimum followers, product purchase requirement
+12. **Strategic Partner** — Comparison table (26 Ritual vs Others) for CRM & Automations, Instant Payouts, Dedicated Success Manager, Data Ownership. "We Guide You Every Step of the Way" copy with CTA
+13. **Business Backbone / Chart** — "Deep Insights. Instant Payouts." with stats (₹2.4L avg monthly, ₹82k available), SVG area chart showing monthly earnings growth (+124% YoY)
+14. **Testimonials** — "Creators Are Crushing It" with 11 testimonial cards showing creator avatars, handles, niches, and quotes
+15. **Final CTA** — "Ready to Get Rewarded For What You Do Best?" with 3 checkmarks (Tracked affiliate links, On-time monthly payouts, Dedicated creator support) and Apply button
+16. **Waitlist Form** — Full application form with: Full Name, Email, Instagram Account Link (required), Platform promotion details (dynamic add/remove rows with platform select + details), Social Media Links (optional, dynamic add/remove), Additional Information textarea, T&C checkbox, Submit button. Submits to Google Apps Script endpoint via `no-cors` POST
+17. **Footer** — "26 Ritual" brand, tagline, copyright, version number, "Your Skin. Your Story. Your Earnings." tagline
+18. **Floating elements** — Mobile sticky CTA ("Become a creator →"), Theme toggle button (sun icon)
+
+### Theme System
+- **ThemeContext** (`ThemeContext.tsx`) wraps the entire app, providing dark/light/system mode support
+- Default theme: `dark`, persisted to `localStorage` under key `vite-ui-theme`
+- Applies `light` or `dark` CSS class on `<html>` element
+- **26 Ritual branded palette** defined in `index.css`:
+  - Light mode: cream background `#FDF6EE`, ink foreground `#2C2420`, terra primary `#C4785A`, blush secondary `#F2D4C8`
+  - Dark mode: ink background `#2C2420`, cream foreground `#FDF6EE`, same terra primary
+- Smooth theme transitions via CSS `transition` on body
+- Static landing page has its own independent theme toggle via `data-theme` attribute
+
+### Branding
+- Sidebars display "26ritual" brand name with "26" in terra (primary) color and "ritual" in white
+- Admin sidebar header: "Admin Portal"; Creator sidebar header: "Creator Studio"
+- Active nav item has a vertical terra-colored indicator bar
+
 ### Authentication Flow
 1. **Signup** → `POST /api/auth/signup` → creates `user_type="creator"` → redirects to `/login`
 2. **Login** → `POST /api/auth/login` → returns JWT → stored in `localStorage`
@@ -161,7 +222,7 @@ BB_Affiliate/
 
 ### API Proxy
 - **Dev**: Vite proxies `/api` requests to `http://localhost:8001` (configured in `vite.config.ts`)
-- **Prod**: Nginx proxies `/api/` to `http://api:8001` (configured in `frontend/nginx.conf`)
+- **Prod**: Nginx proxies `/api/` to `http://api:8001` (configured in `frontend/nginx.prod.conf`)
 
 ### Database
 - **Primary DB**: PostgreSQL (`DATABASE_URL` in `.env`) — the affiliate platform's own data
@@ -199,7 +260,8 @@ DigitalOcean Droplet (64.227.163.108)
     ├── postgres:17-alpine (internal)
     ├── bb-affiliate-api (FastAPI on :8001, internal)
     └── bb-affiliate-ui (Nginx on :80/:443, public)
-        ├── Serves static frontend assets
+        ├── Serves static landing page at /
+        ├── Serves React SPA for all other routes
         ├── Proxies /api/ → api:8001
         └── SSL via Let's Encrypt certs (/etc/letsencrypt)
 ```
@@ -268,11 +330,12 @@ npm run dev            # → http://localhost:5173
 
 ## Key Conventions
 
-- **CSS**: Tailwind v4 utility classes; custom CSS properties in `index.css`
-- **State Management**: React Context (`AuthContext`, `SelectionContext`) — no Redux/Zustand
+- **CSS**: Tailwind v4 utility classes (SPA); standalone CSS design system with terra/ink palette (static landing)
+- **State Management**: React Context (`AuthContext`, `SelectionContext`, `ThemeContext`) — no Redux/Zustand
 - **API Layer**: Typed API functions in `lib/creator-api.ts`, `lib/admin-api.ts`, `lib/public-api.ts`
 - **Component Library**: Radix UI primitives wrapped in `components/ui/` with CVA variants
-- **Theme**: Dark mode default. Toggle via `ThemeToggle.tsx` (persisted in `localStorage`)
+- **Theme**: Dark mode default. `ThemeContext` provides dark/light/system modes, persisted in `localStorage`. Branded 26 Ritual terra/ink color palette in `index.css`
 - **Path Alias**: `@/` maps to `src/` (configured in `vite.config.ts` and `tsconfig.json`)
 - **Containerization**: Multi-stage Docker builds for both frontend (node → nginx) and backend (python builder → runtime)
 - **Deployment**: Single `deploy.sh` script; rsync + remote Docker Compose rebuild
+- **Branding**: "26 Ritual" branding in sidebars and static landing; "BeautyBarn" for product/storefront references

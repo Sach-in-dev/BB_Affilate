@@ -1,6 +1,6 @@
 # BeautyBarn Affiliate Platform — Handoff Document
 
-> Last updated: 2026-07-27
+> Last updated: 2026-07-30
 > Repo: https://github.com/Sach-in-dev/BB_Affilate
 > Branch: `main`
 > Live: https://beta.26ritual.com
@@ -9,12 +9,13 @@
 
 ## What Is This Project?
 
-The **BeautyBarn Affiliate Platform** is a full-stack web application that enables beauty content creators (influencers) to generate unique affiliate links for BeautyBarn's K-Beauty product catalog. Creators share these links on social media; customer clicks and conversions are tracked, and creators earn commissions.
+The **BeautyBarn Affiliate Platform** (branded as **26 Ritual**) is a full-stack web application that enables beauty content creators (influencers) to generate unique affiliate links for BeautyBarn's K-Beauty product catalog. Creators share these links on social media; customer clicks and conversions are tracked, and creators earn commissions.
 
-The platform has three user-facing surfaces:
-1. **Public Landing Page** — marketing page at `/` with waitlist form to attract new creators
-2. **Creator Dashboard** — at `/dashboard/*` for creators to manage links, view analytics, and edit their profile
-3. **Admin Portal** — at `/admin/*` for BeautyBarn staff to manage users, roles, products, and campaigns
+The platform has four user-facing surfaces:
+1. **Static Landing Page** — premium standalone HTML/CSS/JS marketing page at `/` (bypasses React SPA), branded as "26 Ritual" with hero carousel, earnings calculator, testimonials, FAQ, scroll animations, and parallax effects
+2. **React Landing Page** — original React-based marketing page, now at `/landing-page-1` with waitlist form, dashboard mock, and automation demo
+3. **Creator Dashboard** — at `/dashboard/*` for creators to manage links, view analytics, and edit their profile
+4. **Admin Portal** — at `/admin/*` for BeautyBarn staff to manage users, roles, products, and campaigns
 
 ---
 
@@ -24,7 +25,9 @@ The platform has three user-facing surfaces:
 
 | Feature | Status | Notes |
 |---|---|---|
-| **Landing Page** | ✅ Complete | Premium responsive design with hero, dashboard mock, automation demo, waitlist form (→ Google Sheets), stats, step timeline, feature cards, FAQ accordion, CTA, footer |
+| **Static Landing Page (26 Ritual)** | ✅ Complete | Standalone HTML/CSS/JS page at `/` (bypasses React SPA). 18 sections: nav with mobile menu, hero with gradient/glow/grid, industry category scroll rows, 4-panel dashboard preview (broadcasts, real-time earnings feed, content library, smart scheduler), monetize bento grid (7 revenue cards), interactive earnings calculator (audience/order sliders, animated tweening), chat device mockup with group chat UI, "Everything In One Place" feature showcase, brand marquee (COSRX, AXIS-Y, Beauty of Joseon, VT, I'm from), creator tools (verified links, analytics, support, payouts), FAQ accordion (5 items), comparison table (26 Ritual vs Others), earnings chart with SVG area graph, 11 testimonial cards, final CTA, waitlist application form (name, email, Instagram, dynamic platforms, social links, additional info → Google Sheets), footer. Plus floating mobile CTA and theme toggle |
+| **React Landing Page** | ✅ Complete | React-based marketing page now at `/landing-page-1`. Hero, dashboard mock, automation demo, waitlist form (→ Google Sheets), stats, step timeline, feature cards, FAQ, CTA, footer |
+| **26 Ritual Branded Theme** | ✅ Complete | Terra/ink color palette (terra `#C4785A`, ink `#2C2420`, cream `#FDF6EE`, blush `#F2D4C8`). ThemeContext provides dark/light/system modes. Persisted to localStorage. Smooth theme transitions. Both SPA and static landing page have independent theme toggles |
 | **Waitlist Form** | ✅ Complete | Multi-field form (name, email, platforms, follower count) submits to Google Apps Script → Google Sheets |
 | **Auth (Signup/Login/Logout)** | ✅ Complete | JWT-based auth with localStorage persistence, route guards, role-based redirects |
 | **Creator Dashboard — Home** | ✅ Complete | Stats cards (clicks, orders, commission, conversion rate), top products, recent activity, trending products, promotional banners |
@@ -40,10 +43,11 @@ The platform has three user-facing surfaces:
 | **Affiliate Link Resolution** | ✅ Complete | `/r/:code` resolves links: single → redirect to product page, bundle → branded landing page. Checks `is_active` flag — returns 403 if link deactivated |
 | **Click Tracking** | ✅ Complete | Every link visit records a `LinkClick` with source, referrer, user agent, IP |
 | **Product Sync** | ✅ Complete | Pulls products from BB production DB (read-only) into local catalog |
-| **Dark Mode** | ✅ Complete | Defaults to dark, persists preference in localStorage |
+| **Theme System** | ✅ Complete | ThemeContext with dark/light/system modes. 26 Ritual branded terra/ink palette. Defaults to dark, persists in localStorage |
 | **Docker Setup** | ✅ Complete | Full Docker Compose for dev (with exposed Postgres on :5434) and production |
-| **Production Deployment** | ✅ Complete | One-command deploy via `deploy.sh` to DigitalOcean; Nginx reverse proxy with SSL |
+| **Production Deployment** | ✅ Complete | One-command deploy via `deploy.sh` to DigitalOcean; Nginx reverse proxy with SSL. Separate `nginx.prod.conf` with HTTPS redirect and ACME challenge support |
 | **Product Selection Context** | ✅ Complete | Dedicated `SelectionContext` for managing multi-product selection state |
+| **Brand Assets** | ✅ Complete | Full asset directory structure: `public/assets/` with brand logos, creator photos (.webp), testimonial images, demo video, custom fonts (Playfair Display, DM Sans, DM Mono) |
 
 ### What's Placeholder / Coming Soon 🚧
 
@@ -52,7 +56,6 @@ The platform has three user-facing surfaces:
 | Admin — Commissions | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Campaigns | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Products | 🚧 `ComingSoonPage` | UI placeholder only |
-| Admin — Creators | ✅ Complete | Full Creator Management module (see above) |
 | Admin — Banners | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Links | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Analytics | 🚧 `ComingSoonPage` | UI placeholder only |
@@ -73,16 +76,22 @@ The platform has three user-facing surfaces:
 | `bf10a37` | Landing page polish, dark mode default, sidebar logo link, profile dropdown nav |
 | `045a868` | Add Docker setup, CONTEXT.md, and HANDOFF.md |
 | `be9840a` | Replace codebase entirely with new project code (restructured repo: removed `bb/` nesting, added Dockerfiles, nginx.conf, deploy script, waitlist form, automation demo, dashboard mock, SelectionContext, AdminRolesPage, RoleFormDialog, utility scripts) |
+| `96e7408` | Add Creator Management module and auto link deactivation on suspension |
+| `f45e6ba` | New static landing page (26 Ritual branded) and theme system overhaul (ThemeContext, terra/ink palette, dual landing page architecture) |
+| `277aeb3` | Link fixes |
 
 ---
 
 ## Architecture Decisions
 
+### Why a static landing page separate from the React SPA?
+The primary landing page (`/`) is a standalone HTML/CSS/JS page served directly by nginx. This gives maximum performance (no React bundle load), full design control with a custom CSS design system (terra/ink palette, Playfair Display + DM Sans typography, scroll-reveal animations, parallax effects, auto-scrolling carousels), and independence from the SPA build pipeline. The static page has its own waitlist application form that submits directly to Google Apps Script (name, email, Instagram link, promotion platforms with dynamic rows, social links, additional info). The React landing page remains at `/landing-page-1` as an alternative/legacy version.
+
 ### Why JWT in localStorage (not cookies)?
 Simple SPA auth pattern. The token is attached via Axios interceptor. For production, consider switching to HttpOnly cookies to mitigate XSS risks.
 
 ### Why no state management library?
-The app's state is simple enough that React Context (`AuthContext`, `SelectionContext`) handles everything. If the app grows significantly (real-time notifications, complex caching), consider adding TanStack Query or Zustand.
+The app's state is simple enough that React Context (`AuthContext`, `SelectionContext`, `ThemeContext`) handles everything. If the app grows significantly (real-time notifications, complex caching), consider adding TanStack Query or Zustand.
 
 ### Why Tailwind v4?
 The project uses `@tailwindcss/vite` plugin (Tailwind v4) which requires no `tailwind.config.js`. Custom properties are defined directly in `index.css`.
@@ -91,7 +100,7 @@ The project uses `@tailwindcss/vite` plugin (Tailwind v4) which requires no `tai
 Single `docker compose up` spins up Postgres, backend, and frontend. Same compose file structure for dev and prod, with prod adding SSL and tighter security. Eliminates "works on my machine" issues.
 
 ### Why Nginx in the frontend container?
-The frontend Dockerfile builds the React app with Vite, then serves the static output via Nginx. Nginx also reverse-proxies `/api/` to the backend container, so no CORS issues in production and a single entry point on port 80/443.
+The frontend Dockerfile builds the React app with Vite, then serves the static output via Nginx. Nginx serves the static landing page at `/`, falls back to the React SPA for other routes, and reverse-proxies `/api/` to the backend container.
 
 ### Why rsync + Docker for deployment?
 Simple, no-CI deployment for early stage. `deploy.sh` syncs the repo to the droplet and rebuilds containers. Can be replaced with a proper CI/CD pipeline later.
@@ -110,6 +119,7 @@ Tables are created via `Base.metadata.create_all` on startup. For production, sw
 | **SSL** | Let's Encrypt certificates mounted at `/etc/letsencrypt` |
 | **Containers** | `bb-affiliate-postgres-prod`, `bb-affiliate-api-prod`, `bb-affiliate-ui-prod` |
 | **DB Port (dev)** | Postgres exposed on `localhost:5434` for local tooling |
+| **Nginx configs** | `nginx.conf` (dev), `nginx.prod.conf` (prod with SSL + ACME) |
 
 ---
 
@@ -120,9 +130,10 @@ Tables are created via `Base.metadata.create_all` on startup. For production, sw
 3. **Default admin password** — `Admin@123` is hardcoded in `permissions.py`. Change on first deployment.
 4. **No rate limiting** — Auth endpoints have no brute-force protection.
 5. **No email verification** — Signups are immediately active without email confirmation.
-6. **Product images** — Brand carousel uses AI-generated placeholder images in `public/images/`. Replace with actual brand imagery for production.
+6. **Product images** — Legacy brand carousel uses placeholder images in `public/images/`. Static landing page uses actual brand assets in `public/assets/brand/`.
 7. **Google Sheets URL hardcoded** — Waitlist form has a fallback Apps Script URL baked into `WaitlistForm.tsx`. Should be env-only.
 8. **No CI/CD** — Deployment is manual via `deploy.sh`. Consider GitHub Actions for automated builds/deploys.
+9. **Dual landing page maintenance** — Two separate landing pages (static HTML at `/` and React at `/landing-page-1`) need to be kept in sync or one should be deprecated.
 
 ---
 
@@ -140,6 +151,13 @@ Tables are created via `Base.metadata.create_all` on startup. For production, sw
 3. **Route**: Add route under the `/dashboard` layout in `src/main.tsx`
 4. **Sidebar**: Add nav item in `src/components/layout/CreatorSidebar.tsx`
 5. **API**: Add functions to `src/lib/creator-api.ts`
+
+### Modifying the static landing page
+1. Edit `frontend/public/landing.html` (structure)
+2. Edit `frontend/public/css/styles.css` (styles)
+3. Edit `frontend/public/js/main.js` (interactivity)
+4. Add assets to `frontend/public/assets/` subdirectories
+5. No build step required — changes are served directly by nginx
 
 ### Deploying changes
 ```bash
