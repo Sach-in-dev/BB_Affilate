@@ -1,6 +1,6 @@
 # BeautyBarn Affiliate Platform — Handoff Document
 
-> Last updated: 2026-07-30
+> Last updated: 2026-08-04
 > Repo: https://github.com/Sach-in-dev/BB_Affilate
 > Branch: `main`
 > Live: https://beta.26ritual.com
@@ -28,7 +28,7 @@ The platform has four user-facing surfaces:
 | **Static Landing Page (26 Ritual)** | ✅ Complete | Standalone HTML/CSS/JS page at `/` (bypasses React SPA). 18 sections: nav with mobile menu, hero with gradient/glow/grid, industry category scroll rows, 4-panel dashboard preview (broadcasts, real-time earnings feed, content library, smart scheduler), monetize bento grid (7 revenue cards), interactive earnings calculator (audience/order sliders, animated tweening), chat device mockup with group chat UI, "Everything In One Place" feature showcase, brand marquee (COSRX, AXIS-Y, Beauty of Joseon, VT, I'm from), creator tools (verified links, analytics, support, payouts), FAQ accordion (5 items), comparison table (26 Ritual vs Others), earnings chart with SVG area graph, 11 testimonial cards, final CTA, waitlist application form (name, email, Instagram, dynamic platforms, social links, additional info → Google Sheets), footer. Plus floating mobile CTA and theme toggle |
 | **React Landing Page** | ✅ Complete | React-based marketing page now at `/landing-page-1`. Hero, dashboard mock, automation demo, waitlist form (→ Google Sheets), stats, step timeline, feature cards, FAQ, CTA, footer |
 | **26 Ritual Branded Theme** | ✅ Complete | Terra/ink color palette (terra `#C4785A`, ink `#2C2420`, cream `#FDF6EE`, blush `#F2D4C8`). ThemeContext provides dark/light/system modes. Persisted to localStorage. Smooth theme transitions. Both SPA and static landing page have independent theme toggles |
-| **Waitlist Form** | ✅ Complete | Multi-field form (name, email, platforms, follower count) submits to Google Apps Script → Google Sheets |
+| **Waitlist Form + Admin Module** | ✅ Complete | Landing page form now submits to `/api/public/waitlist` (stored in DB, table `waitlist_entries`). Admin page at `/admin/waitlist` with search, paginated table, expandable rows, delete action, CSV export |
 | **Auth (Signup/Login/Logout)** | ✅ Complete | JWT-based auth with localStorage persistence, route guards, role-based redirects |
 | **Creator Dashboard — Home** | ✅ Complete | Stats cards (clicks, orders, commission, conversion rate), top products, recent activity, trending products, promotional banners |
 | **Creator Dashboard — Products** | ✅ Complete | Browse synced product catalog, search/filter, multi-select via SelectionContext, generate single or bundle affiliate links |
@@ -48,6 +48,8 @@ The platform has four user-facing surfaces:
 | **Production Deployment** | ✅ Complete | One-command deploy via `deploy.sh` to DigitalOcean; Nginx reverse proxy with SSL. Separate `nginx.prod.conf` with HTTPS redirect and ACME challenge support |
 | **Product Selection Context** | ✅ Complete | Dedicated `SelectionContext` for managing multi-product selection state |
 | **Brand Assets** | ✅ Complete | Full asset directory structure: `public/assets/` with brand logos, creator photos (.webp), testimonial images, demo video, custom fonts (Playfair Display, DM Sans, DM Mono) |
+| **Admin — Products** | ✅ Complete | Product catalog management at `/admin/products`. Stats cards (total, active, in-stock, affiliate-enabled), search by name/brand/SKU, filter by brand/category/status/stock, paginated table with expandable rows (rating, tags, synced date, affiliate toggle), CSV export |
+| **Admin — Links & Analytics** | ✅ Complete | Link tracking at `/admin/links` with 3 tabs: **All Links** (paginated table with creator info, code, type, clicks, status toggle, expandable rows with URL/products/per-product clicks, filters, CSV export), **Click Log** (paginated click events with source filter), **Analytics** (summary stats, 30-day bar chart with hover tooltips, top traffic sources with progress bars) |
 
 ### What's Placeholder / Coming Soon 🚧
 
@@ -55,9 +57,7 @@ The platform has four user-facing surfaces:
 |---|---|---|
 | Admin — Commissions | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Campaigns | 🚧 `ComingSoonPage` | UI placeholder only |
-| Admin — Products | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Banners | 🚧 `ComingSoonPage` | UI placeholder only |
-| Admin — Links | 🚧 `ComingSoonPage` | UI placeholder only |
 | Admin — Analytics | 🚧 `ComingSoonPage` | UI placeholder only |
 | Commission Calculation | 🚧 Not implemented | No actual payout logic yet |
 | Order Tracking Integration | 🚧 Not implemented | No webhook from BB store to track conversions |
@@ -79,6 +79,8 @@ The platform has four user-facing surfaces:
 | `96e7408` | Add Creator Management module and auto link deactivation on suspension |
 | `f45e6ba` | New static landing page (26 Ritual branded) and theme system overhaul (ThemeContext, terra/ink palette, dual landing page architecture) |
 | `277aeb3` | Link fixes |
+| `ded58d9` | Add Waitlist module — store submissions in DB and display in admin dashboard |
+| `a53f9de` | Add CSV export for waitlist entries |
 
 ---
 
@@ -131,7 +133,7 @@ Tables are created via `Base.metadata.create_all` on startup. For production, sw
 4. **No rate limiting** — Auth endpoints have no brute-force protection.
 5. **No email verification** — Signups are immediately active without email confirmation.
 6. **Product images** — Legacy brand carousel uses placeholder images in `public/images/`. Static landing page uses actual brand assets in `public/assets/brand/`.
-7. **Google Sheets URL hardcoded** — Waitlist form has a fallback Apps Script URL baked into `WaitlistForm.tsx`. Should be env-only.
+7. **Google Sheets URL legacy** — The React landing page's `WaitlistForm.tsx` still submits to Google Apps Script. The static landing page (`landing.html`) now submits to `/api/public/waitlist` (DB-backed).
 8. **No CI/CD** — Deployment is manual via `deploy.sh`. Consider GitHub Actions for automated builds/deploys.
 9. **Dual landing page maintenance** — Two separate landing pages (static HTML at `/` and React at `/landing-page-1`) need to be kept in sync or one should be deprecated.
 

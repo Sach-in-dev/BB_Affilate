@@ -62,12 +62,14 @@ BB_Affiliate/
 │       │   ├── product.py        # Product model (synced from BB production)
 │       │   ├── affiliate.py      # AffiliateLink (with is_active flag), AffiliateLinkItem, LinkClick
 │       │   ├── activity_log.py   # ActivityLog model (tracks creator/admin management actions)
-│       │   └── banner.py         # Banner model
+│       │   ├── banner.py         # Banner model
+│       │   └── waitlist.py       # WaitlistEntry model (waitlist form submissions)
 │       ├── schemas/
 │       │   ├── auth.py           # Login/signup request/response schemas
 │       │   ├── admin.py          # Admin user CRUD schemas
 │       │   ├── catalog.py        # Product catalog schemas
-│       │   └── user_management.py # Creator management request/response schemas
+│       │   ├── user_management.py # Creator management request/response schemas
+│       │   └── waitlist.py       # Waitlist submission request/response schemas
 │       ├── routers/
 │       │   ├── auth.py           # /api/auth/* (signup, login, logout, me, suspended account check)
 │       │   ├── admin.py          # /api/admin/* (users, roles CRUD, admin user status/restore/activity)
@@ -75,7 +77,10 @@ BB_Affiliate/
 │       │   ├── products.py       # /api/products/* (catalog, trending, sync)
 │       │   ├── creator.py        # /api/creator/* (links, stats, profile)
 │       │   ├── public.py         # /api/public/* (resolve links, click tracking, is_active check)
-│       │   └── banners.py        # /api/creator/banners
+│       │   ├── banners.py        # /api/creator/banners
+│       │   ├── waitlist.py       # /api/public/waitlist (submit) + /api/admin/waitlist (list, export, delete)
+│       │   ├── admin_products.py # /api/admin/products (list, stats, export, update affiliate toggle)
+│       │   └── admin_links.py    # /api/admin/links (list, stats, clicks, export, toggle status)
 │       └── services/
 │           ├── links.py          # Link code generation logic
 │           └── product_sync.py   # Sync products from BB production DB
@@ -113,7 +118,7 @@ BB_Affiliate/
         ├── lib/
         │   ├── axios.ts          # Axios instance with Bearer token interceptor
         │   ├── creator-api.ts    # Creator API functions
-        │   ├── admin-api.ts      # Admin API functions (users, roles, permissions, creator management)
+        │   ├── admin-api.ts      # Admin API functions (users, roles, permissions, creator management, waitlist, products, links)
         │   ├── public-api.ts     # Public API functions
         │   └── utils.ts          # cn() utility (clsx + tailwind-merge)
         ├── hooks/
@@ -159,7 +164,10 @@ BB_Affiliate/
                 ├── UserDetailDialog.tsx    # View creator details dialog
                 ├── UserEditDialog.tsx      # Edit creator dialog
                 ├── ConfirmDialog.tsx       # Reusable confirmation dialog
-                └── ComingSoonPage.tsx      # Placeholder for unbuilt sections
+                ├── ComingSoonPage.tsx      # Placeholder for unbuilt sections
+                ├── WaitlistPage.tsx        # Waitlist submissions (search, paginated table, delete, CSV export)
+                ├── AdminProductsPage.tsx   # Product catalog (stats, search, filters, paginated table, affiliate toggle, CSV export)
+                └── AdminLinksPage.tsx      # Link tracking & analytics (3 tabs: All Links, Click Log, Analytics with 30-day chart)
 ```
 
 ---
