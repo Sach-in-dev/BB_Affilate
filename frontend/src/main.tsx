@@ -24,6 +24,8 @@ import AdminRolesPage from "@/pages/admin/AdminRolesPage";
 import UserManagementPage from "@/pages/admin/UserManagementPage";
 import ComingSoonPage from "@/pages/admin/ComingSoonPage";
 import WaitlistPage from "@/pages/admin/WaitlistPage";
+import AdminProductsPage from "@/pages/admin/AdminProductsPage";
+import AdminLinksPage from "@/pages/admin/AdminLinksPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -54,10 +56,10 @@ createRoot(document.getElementById("root")!).render(
               <Route path="roles" element={<AdminRolesPage />} />
               <Route path="commissions" element={<ComingSoonPage title="Commissions" />} />
               <Route path="campaigns" element={<ComingSoonPage title="Campaigns" />} />
-              <Route path="products" element={<ComingSoonPage title="Products" />} />
+              <Route path="products" element={<AdminProductsPage />} />
               <Route path="creators" element={<UserManagementPage />} />
               <Route path="banners" element={<ComingSoonPage title="Banners" />} />
-              <Route path="links" element={<ComingSoonPage title="Links" />} />
+              <Route path="links" element={<AdminLinksPage />} />
               <Route path="analytics" element={<ComingSoonPage title="Analytics" />} />
               <Route path="waitlist" element={<WaitlistPage />} />
             </Route>

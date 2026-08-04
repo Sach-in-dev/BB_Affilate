@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import engine, Base, async_session
 from app.core.seed import seed_defaults
-from app.routers import auth, admin, products, creator, public, banners, user_management, waitlist
+from app.routers import auth, admin, products, creator, public, banners, user_management, waitlist, admin_products, admin_links
 
 # Ensure models are imported so metadata is registered before create_all.
 from app.models import user as _user  # noqa: F401
@@ -37,5 +37,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for r in (auth.router, admin.router, products.router, creator.router, public.router, banners.router, user_management.router, waitlist.router):
+for r in (auth.router, admin.router, products.router, creator.router, public.router, banners.router, user_management.router, waitlist.router, admin_products.router, admin_links.router):
     app.include_router(r, prefix="/api")

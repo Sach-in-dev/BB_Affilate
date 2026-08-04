@@ -212,6 +212,28 @@ export const adminApi = {
     api.delete(`/admin/waitlist/${id}`).then((r) => r.data.data),
   exportWaitlist: (params: { search?: string } = {}) =>
     api.get("/admin/waitlist/export", { params, responseType: "blob" }).then((r) => r.data),
+
+  // ── Admin Products ──
+  getAdminProducts: (params: AdminProductParams = {}) =>
+    api.get("/admin/products", { params }).then((r) => r.data.data as AdminProductListResponse),
+  getProductStats: () =>
+    api.get("/admin/products/stats").then((r) => r.data.data as ProductStats),
+  exportProducts: (params: { search?: string; brand?: string; category?: string } = {}) =>
+    api.get("/admin/products/export", { params, responseType: "blob" }).then((r) => r.data),
+  updateProduct: (id: string, data: { is_affiliate_enabled?: boolean; status?: string }) =>
+    api.patch(`/admin/products/${id}`, null, { params: data }).then((r) => r.data.data),
+
+  // ── Admin Links ──
+  getAdminLinks: (params: AdminLinkParams = {}) =>
+    api.get("/admin/links", { params }).then((r) => r.data.data as AdminLinkListResponse),
+  getLinkStats: () =>
+    api.get("/admin/links/stats").then((r) => r.data.data as LinkStats),
+  getClicks: (params: ClickParams = {}) =>
+    api.get("/admin/links/clicks", { params }).then((r) => r.data.data as ClickListResponse),
+  exportLinks: (params: { search?: string; creator_id?: string; link_type?: string } = {}) =>
+    api.get("/admin/links/export", { params, responseType: "blob" }).then((r) => r.data),
+  toggleLinkStatus: (id: string, is_active: boolean) =>
+    api.patch(`/admin/links/${id}/status`, null, { params: { is_active } }).then((r) => r.data.data),
 };
 
 export interface WaitlistEntry {
@@ -231,4 +253,130 @@ export interface WaitlistListResponse {
   page: number;
   page_size: number;
   total_pages: number;
+}
+
+// ── Admin Products types ──
+
+export interface AdminProduct {
+  id: string;
+  name: string;
+  brand: string | null;
+  category: string | null;
+  price: number | null;
+  discount_price: number | null;
+  image: string | null;
+  product_url: string;
+  sku: string | null;
+  status: string;
+  availability: boolean;
+  tags: string[];
+  rating: number | null;
+  is_affiliate_enabled: boolean;
+  synced_at: string | null;
+}
+
+export interface AdminProductListResponse {
+  products: AdminProduct[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+export interface AdminProductParams {
+  page?: number;
+  page_size?: number;
+  search?: string;
+  brand?: string;
+  category?: string;
+  status?: string;
+  availability?: boolean;
+}
+
+export interface ProductStats {
+  total: number;
+  active: number;
+  in_stock: number;
+  out_of_stock: number;
+  affiliate_enabled: number;
+  brands: string[];
+  categories: string[];
+}
+
+// ── Admin Links types ──
+
+export interface AdminLink {
+  id: string;
+  code: string;
+  link_type: string;
+  title: string | null;
+  url: string;
+  is_active: boolean;
+  total_clicks: number;
+  total_orders: number;
+  total_commission: number;
+  creator: { id: string; name: string; email: string; handle: string | null } | null;
+  products: { id: string; name: string; brand: string | null; image: string | null; clicks: number }[];
+  created_at: string | null;
+}
+
+export interface AdminLinkListResponse {
+  links: AdminLink[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+export interface AdminLinkParams {
+  page?: number;
+  page_size?: number;
+  search?: string;
+  creator_id?: string;
+  link_type?: string;
+  is_active?: boolean;
+  date_from?: string;
+  date_to?: string;
+}
+
+export interface LinkStats {
+  total_links: number;
+  active_links: number;
+  inactive_links: number;
+  single_links: number;
+  bundle_links: number;
+  total_clicks: number;
+  unique_clicks: number;
+  top_sources: { source: string; count: number }[];
+  clicks_by_day: { date: string; clicks: number }[];
+}
+
+export interface ClickEntry {
+  id: string;
+  link_id: string;
+  code: string;
+  creator_id: string;
+  product_id: string | null;
+  source: string | null;
+  referrer: string | null;
+  ip_address: string | null;
+  clicked_at: string | null;
+}
+
+export interface ClickListResponse {
+  clicks: ClickEntry[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+export interface ClickParams {
+  page?: number;
+  page_size?: number;
+  link_id?: string;
+  creator_id?: string;
+  source?: string;
+  date_from?: string;
+  date_to?: string;
 }
